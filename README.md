@@ -19,8 +19,10 @@ Variables del miembro 1:
 
 [Variable 1 - Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538141/Variable.1.-.Santiago.csv)
 
-+
++ Personas sin acceso a sanidad segura: 
 + Archivo:
+
+[safe_sanitation_without.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538954/safe_sanitation_without.csv)
 
 +
 + Archivo: 
