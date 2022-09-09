@@ -6,7 +6,7 @@
 + Andrea Salas 
 + Ana Goñi
 
-Tema de investigación: Corrupción
+## Tema de investigación: Corrupción
 
 Variable independiente común: Percepción de corrupción
 
