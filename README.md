@@ -12,7 +12,7 @@ Variable independiente común: Percepción de corrupción
 
 Variables del miembro 1:
 
-+
++Inflación/precios al consumidor (tentativa)
 +
 +
 
