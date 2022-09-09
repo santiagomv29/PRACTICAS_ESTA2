@@ -12,7 +12,7 @@ Variable dependiente común: Percepción de corrupción
 
 [Variable_dependiente.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538502/Variable_dependiente.xlsx)
 
-Variables del miembro 1:
+## Variables del miembro 1:
 
 + Desempleo total (1991 - 2021):
 + Archivo:
@@ -24,10 +24,12 @@ Variables del miembro 1:
 
 [Variable_2_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538967/Variable_2_Santiago.csv)
 
-+
++ Inflación y precios del consumo (1960 - 2021):
 + Archivo: 
 
-Variables del miembro 2: 
+[Variable_3_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538995/Variable_3_Santiago.csv)
+
+## Variables del miembro 2: 
 
 +
 + Archivo:
@@ -38,7 +40,7 @@ Variables del miembro 2:
 +
 + Archivo:
 
-Variables del miembro 3: 
+## Variables del miembro 3: 
 
 +
 + Archivo:
