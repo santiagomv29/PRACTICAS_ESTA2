@@ -12,23 +12,38 @@ Variable independiente común: Percepción de corrupción
 
 Variables del miembro 1:
 
-+Inflación/precios al consumidor (tentativa)
++ Desempleo total (1991 - 2021):
++ Archivo:
+
+[Variable 1 - Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538070/Variable.1.-.Santiago.csv)
+
 +
++ Archivo:
+
 +
++ Archivo: 
 
 Variables del miembro 2: 
 
 +
++ Archivo:
+
 +
++ Archivo:
+
 +
++ Archivo:
 
 Variables del miembro 3: 
 
 +
-+
-+
++ Archivo:
 
-Meta data:
++
++ Archivo:
 
-Archivo: 
++
++ Archivo:
+
+
 
