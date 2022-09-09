@@ -9,18 +9,25 @@ Tema de investigación:
 
 Variable independiente común: 
 
-Variables del miembro 1: 
+Variables del miembro 1:
+
 +
 +
 +
+
 Variables del miembro 2: 
+
 +
 +
 +
+
 Variables del miembro 3: 
+
 +
 +
 +
+
 Meta data:
+
 Archivo: 
 
