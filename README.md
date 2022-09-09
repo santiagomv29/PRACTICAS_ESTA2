@@ -17,12 +17,12 @@ Variables del miembro 1:
 + Desempleo total (1991 - 2021):
 + Archivo:
 
-[Variable 1 - Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538141/Variable.1.-.Santiago.csv)
+[Variable_1_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538971/Variable_1_Santiago.csv)
 
 + Personas sin acceso a sanidad segura (2000 - 2020): 
 + Archivo:
 
-[safe_sanitation_without.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538954/safe_sanitation_without.csv)
+[Variable_2_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538967/Variable_2_Santiago.csv)
 
 +
 + Archivo: 
