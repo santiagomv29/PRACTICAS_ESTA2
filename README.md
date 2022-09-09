@@ -8,7 +8,9 @@
 
 ## Tema de investigación: Corrupción
 
-Variable independiente común: Percepción de corrupción
+Variable dependiente común: Percepción de corrupción
+
+[Variable_dependiente.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538502/Variable_dependiente.xlsx)
 
 Variables del miembro 1:
 
