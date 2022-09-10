@@ -51,17 +51,18 @@ https://www.transparency.org/en/cpi/2021
 + Índice de democracia:
 + Justificación: El índice de democracia capta la medida en que las elecciones abiertas, multipartidistas y competitivas eligen a un jefe del ejecutivo que se enfrenta a amplias limitaciones institucionales, y la participación política es competitiva. Por ello, es relevante conocer si los países que desarrollan un régimen con mayor o menor democracia, generan un impacto en la percepción de la corrupción de los ciudadanos, respecto al desarrollo de elecciones justas.
 
-+ Archivo:
++ Archivo: [1. democracy.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540029/1.democracy.csv)
 
 + IDH
-+ Justificación:El IDH es un indicador que se encarga de cuantificar el nivel de desarrollo de los países, basado en salud, educación y economía. Asimismo, se debe considerar que países menos avanzados suelen estar ligados a casos de corrupción. Esta situación puede provocar que los ciudadanos perciban una mayor corrupción en dichos países. Por ello, es necesario averiguar si la esperanza de vida, el nivel de educación y la economía de un país, en mayor o menor medida, generan un impacto en la percepción de la corrupción.
++ Justificación: El IDH es un indicador que se encarga de cuantificar el nivel de desarrollo de los países, basado en salud, educación y economía. Asimismo, se debe considerar que países menos avanzados suelen estar ligados a casos de corrupción. Esta situación puede provocar que los ciudadanos perciban una mayor corrupción en dichos países. Por ello, es necesario averiguar si la esperanza de vida, el nivel de educación y la economía de un país, en mayor o menor medida, generan un impacto en la percepción de la corrupción.
 
-+ Archivo:
++ Archivo: [2. HDR21-22_Statistical_Annex_HDI_Trends_Table.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540030/2.HDR21-22_Statistical_Annex_HDI_Trends_Table.xlsx)
 
 + Legitimidad estatal
 + Justificación: La legitimidad del Estado es la representatividad y la apertura del gobierno y su relación con la ciudadanía. De esta manera, se refiere al nivel de confianza de la población en las instituciones y los procesos del Estado, al mismo tiempo que evalúa los efectos de la ausencia de esa confianza, que se manifiesta a través de, por ejemplo, la percepción de corrupción.
 
-+ Archivo:
++ Archivo: [3. Rankings.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540031/3.Rankings.xlsx)
+
 
 
 
