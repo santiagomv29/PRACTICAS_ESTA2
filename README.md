@@ -49,7 +49,7 @@ https://www.transparency.org/en/cpi/2021
 ## Variables del miembro 3: Ana Goñi
 
 + Índice de democracia:
-+ Justificación:Es conocido que el tipo de gobierno de la actualidad preferido por la mayoría de países en el mundo es la democracia. Esto debido a que la democracia permite la participación ciudadana, establece límites para los gobiernos y garantiza derechos fundamentales. Sin embargo, las posibilidades de una experiencia democrática se desarrollan en menor o mayor medida en las distintas partes del mundo. El índice de democracia capta la medida en que las elecciones abiertas, multipartidistas y competitivas eligen a un jefe del ejecutivo que se enfrenta a amplias limitaciones institucionales, y la participación política es competitiva. Por ello, es relevante conocer si los países que desarrollan un régimen con mayor o menor democracia, generan un impacto en la percepción de la corrupción de los ciudadanos, respecto a elecciones justas.
++ Justificación: El índice de democracia capta la medida en que las elecciones abiertas, multipartidistas y competitivas eligen a un jefe del ejecutivo que se enfrenta a amplias limitaciones institucionales, y la participación política es competitiva. Por ello, es relevante conocer si los países que desarrollan un régimen con mayor o menor democracia, generan un impacto en la percepción de la corrupción de los ciudadanos, respecto al desarrollo de elecciones justas.
 
 + Archivo:
 
@@ -59,7 +59,7 @@ https://www.transparency.org/en/cpi/2021
 + Archivo:
 
 + Legitimidad estatal
-+ Justificación:La legitimidad del Estado se refiere a la representatividad y la apertura del gobierno y su relación con la ciudadanía. De esta manera, se refiere al nivel de confianza de la población en las instituciones y los procesos del Estado, al mismo tiempo que evalúa los efectos de la ausencia de esa confianza, que se manifiesta a través de, por ejemplo, la percepción de corrupción.
++ Justificación: La legitimidad del Estado es la representatividad y la apertura del gobierno y su relación con la ciudadanía. De esta manera, se refiere al nivel de confianza de la población en las instituciones y los procesos del Estado, al mismo tiempo que evalúa los efectos de la ausencia de esa confianza, que se manifiesta a través de, por ejemplo, la percepción de corrupción.
 
 + Archivo:
 
