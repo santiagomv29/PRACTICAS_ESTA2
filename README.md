@@ -8,6 +8,10 @@
 
 ## Tema de investigación: La percepción de corrupción a nivel global desde 2018-2021
 
+## Justificación del tema: 
+
+La corrupción es un fenónemo de caracter socioeconómico, político y cultural presente en el aparato estatal, empresas e incluso entre los ciudadanos de cada país. Utilizamos el Corruption Perception Index (CPI) para contrastar la percepción de corrupción (variable categórica ordinal) de los países a nivel global con data de la estabilidad laboral y moneteria, uso del presupuesto público, prácticas electorales y cultura política de las respectivas naciones. Elegimos el rango 2018-2021 pues este periodo representa tanto los dos años previos a la pandemia COVID-19 como los dos primeros de confinamiento y posterior reinserción (proceso que sigue dandose). 
+
 Variable dependiente común: Percepción de corrupción
 
 [Variable_dependiente.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540115/Variable_dependiente.xlsx)
@@ -16,17 +20,20 @@ https://www.transparency.org/en/cpi/2021
 
 ## Variables del miembro 1: Santiago Maldonado
 
-+ Desempleo total:
++ Desempleo
++ Justificación: 
 + Archivo: [Variable_1_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538971/Variable_1_Santiago.csv)
 
 https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?view=chart
 
-+ Personas sin acceso a sanidad segura: 
-+ Archivo: [Variable_2_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538967/Variable_2_Santiago.csv)
++ Personas sin acceso a sanidad segura
++ Justificación:
++ Archivo: [Variable_2_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540177/Variable_2_Santiago.csv)
 
 https://ourworldindata.org/sanitation
 
-+ Inflación:
++ Inflación
++ Justificación:
 + Archivo: [Variable_3_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540161/Variable_3_Santiago.csv)
 
 https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?view=chart
