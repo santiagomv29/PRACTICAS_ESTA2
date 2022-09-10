@@ -31,11 +31,13 @@ Variable dependiente común: Percepción de corrupción
 
 ## Variables del miembro 2: Andrea Salas Angles
 
-+ 
-+ Archivo:
++ Gastos per cápita
++ Justificación: La 
++ Archivo: 
 
-+
-+ Archivo:
++ Gastos en educación
++ Justificación: La variable "gastos en educación" compara el gasto público en educación como porcentaje del PIB. El gasto en educación de un país afecta los niveles de educación de su población, lo cual cambia su percepción del mundo, y ello significaría una variable de interés para la percepción de corrupción en su país.
++ Archivo: https://www.cia.gov/the-world-factbook/field/education-expenditures/country-comparison
 
 +
 + Archivo:
