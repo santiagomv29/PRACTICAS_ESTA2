@@ -17,23 +17,17 @@ https://www.transparency.org/en/cpi/2021
 ## Variables del miembro 1: Santiago Maldonado
 
 + Desempleo total:
-+ Archivo:
-
-[Variable_1_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538971/Variable_1_Santiago.csv)
++ Archivo: [Variable_1_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538971/Variable_1_Santiago.csv)
 
 https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?view=chart
 
 + Personas sin acceso a sanidad segura: 
-+ Archivo:
-
-[Variable_2_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538967/Variable_2_Santiago.csv)
++ Archivo: [Variable_2_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538967/Variable_2_Santiago.csv)
 
 https://ourworldindata.org/sanitation
 
 + Inflación:
-+ Archivo: 
-
-[Variable_3_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538995/Variable_3_Santiago.csv)
++ Archivo: [Variable_3_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540161/Variable_3_Santiago.csv)
 
 https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?view=chart
 
