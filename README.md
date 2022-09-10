@@ -10,22 +10,24 @@
 
 Variable dependiente común: Percepción de corrupción
 
-[Variable_dependiente.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538502/Variable_dependiente.xlsx)
+[Variable_dependiente.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540115/Variable_dependiente.xlsx)
 https://www.transparency.org/en/cpi/2021
 
 ## Variables del miembro 1: Santiago Maldonado
 
-+ Desempleo total (1991 - 2021):
++ Desempleo total:
 + Archivo:
 
 [Variable_1_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538971/Variable_1_Santiago.csv)
 
-+ Personas sin acceso a sanidad segura (2000 - 2020): 
+
++ Personas sin acceso a sanidad segura: 
 + Archivo:
 
 [Variable_2_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538967/Variable_2_Santiago.csv)
+https://ourworldindata.org/sanitation
 
-+ Inflación y precios del consumo (1960 - 2021):
++ Inflación y precios del consumo:
 + Archivo: 
 
 [Variable_3_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9538995/Variable_3_Santiago.csv)
