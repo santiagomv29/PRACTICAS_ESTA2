@@ -27,7 +27,7 @@ https://www.transparency.org/en/cpi/2021
 https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?view=chart
 
 + Personas sin acceso a saneamiento seguro
-+ Justificación: El saneamiento público es la base de la salud de la ciudadanía. El acceso a servicios médicos de calidad y la existencia de infraestructura para la distribución de "agua limpia" es esencial para poder mantener un estandar en la calidad de vida de la población. La relación con la corrupción se hace evidente cuando en países con un presupuesto asignado para obras públicas de saneamiento siguen existiendo zonas sin acceso a agua (ejemplo de ello es Perú). 
++ Justificación: El saneamiento público es la base de la salud de la ciudadanía. El acceso a servicios médicos de calidad y la existencia de infraestructura para la distribución de "agua limpia" es esencial para poder mantener un estandar en la calidad de vida de la población. La relación con la corrupción se hace evidente cuando se verifica que en países con un presupuesto asignado para obras públicas de saneamiento (a nivel nacional y subnacional) siguen existiendo zonas sin acceso a agua (ejemplo de ello es Perú). 
 + Archivo: [Variable_2_Santiago.csv](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540177/Variable_2_Santiago.csv)
 
 https://ourworldindata.org/sanitation
