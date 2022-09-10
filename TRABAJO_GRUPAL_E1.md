@@ -2,15 +2,15 @@
 
 ## Miembros del grupo:
 
-+ Santiago Maldonado
++ Santiago Maldonado 20201547
 + Andrea Salas Angles 20200270
-+ Ana Goñi
++ Ana Goñi 20156082
 
-## Tema de investigación: La percepción de corrupción a nivel global desde 2018-2021
+## Tema de investigación: La percepción de corrupción a nivel global desde 2018-2020
 
 ## Justificación del tema: 
 
-La corrupción es un fenónemo de caracter socioeconómico, político y cultural presente en el aparato estatal, empresas e incluso entre los ciudadanos de cada país. Utilizamos el Corruption Perception Index (CPI) para contrastar la percepción de corrupción (variable categórica ordinal) de los países a nivel global con data de la estabilidad laboral y moneteria, uso del presupuesto público, prácticas electorales y cultura política de las respectivas naciones. Elegimos el rango 2018-2021 pues este periodo representa tanto los dos años previos a la pandemia COVID-19 como los dos primeros de confinamiento y posterior reinserción (proceso que sigue dandose). 
+La corrupción es un fenónemo de caracter socioeconómico, político y cultural presente en el aparato estatal, empresas e incluso entre los ciudadanos de cada país. Utilizamos el Corruption Perception Index (CPI) para contrastar la percepción de corrupción (variable categórica ordinal) de los países a nivel global con data de la estabilidad laboral y moneteria, uso del presupuesto público, prácticas electorales y cultura política de las respectivas naciones. Elegimos el rango 2018-2020 pues este periodo representa tanto los dos años previos a la pandemia COVID-19 como el primero de confinamiento y reinserción paulatina (proceso que sigue dandose). 
 
 Variable dependiente común: Percepción de corrupción
 
