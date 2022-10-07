@@ -74,9 +74,9 @@ https://hdr.undp.org/data-center/documentation-and-downloads
 + Legitimidad estatal
 + Justificación: La legitimidad del Estado es la representatividad y la apertura del gobierno y su relación con la ciudadanía. De esta manera, se refiere al nivel de confianza de la población en las instituciones y los procesos del Estado, al mismo tiempo que evalúa los efectos de la ausencia de esa confianza, que se manifiesta a través de, por ejemplo, la percepción de corrupción.
 
-[3. legitimidad2019.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9731172/3.legitimidad2019.xlsx)[3. legitimidad2020.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9731175/3.legitimidad2020.xlsx)
++ Archivo 1: [3. legitimidad2019.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9731172/3.legitimidad2019.xlsx)
 
-[Uploading 3. legitimidad2020.xlsx…]()
++ Archivo 2: [3. legitimidad2020.xlsx](https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9731175/3.legitimidad2020.xlsx)
 
 https://fragilestatesindex.org/indicators/p1/
 
