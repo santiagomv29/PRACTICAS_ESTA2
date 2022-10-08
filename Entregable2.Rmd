@@ -1,0 +1,902 @@
+---
+title: "Entrega2"
+author: "Andrea Salas Angles"
+date: "2022-10-07"
+output: html_document
+---
+
+```{r}
+library(rio)
+iso="https://gist.github.com/brenes/1095110/raw/c8f208b03485ba28f97c500ab7271e8bce43b9c6/paises.csv"
+ISO3=import(iso)
+```
+
+```{r}
+colnames(ISO3) = c("nombre", "COUNTRY", "nom", "iso2", "ISO", "phone")
+```
+
+```{r}
+library(dplyr)
+library(magrittr)
+ISO3 = select(ISO3, ISO, COUNTRY)
+```
+
+
+##VARIABLE 1: INDEPENDENCIA DE JUSTICIA
+
+```{r}
+link2= "https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/Independenciajusticia.csv"
+indjust = import(link2)
+head(indjust)
+```
+
+```{r}
+indjust = filter(indjust, Year>2018)
+```
+
+```{r}
+indjust = filter(indjust, Year<2021)
+```
+
+```{r}
+colnames(indjust) = c("YEAR", "COUNTRY", "INDEP")
+indjust=select(indjust, YEAR, COUNTRY, INDEP)
+```
+
+```{r}
+str(indjust)
+```
+```{r}
+indjust$YEAR = as.numeric(indjust$YEAR)
+```
+
+```{r}
+indjust = indjust[-c(347:406),]
+```
+
+```{r}
+library(tidyr)
+indjust = spread(indjust, YEAR, INDEP)
+indjust
+```
+```{r}
+colnames(indjust) = c("COUNTRY", "2019INDEP", "2020INDEP")
+```
+
+
+
+
+##VARIABLE 2: GOBIERNO ELECTO
+
+```{r}
+link3= "https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/Gobiernoelecto.csv"
+govelec = import(link3)
+head(govelec)
+```
+
+```{r}
+govelec = filter(govelec, Year>2018)
+```
+
+```{r}
+govelec = filter(govelec, Year<2021)
+```
+
+```{r}
+colnames(govelec) = c("YEAR", "COUNTRY", "ELECT")
+govelec=select(govelec, YEAR, COUNTRY, ELECT)
+```
+
+```{r}
+str(govelec)
+```
+
+```{r}
+govelec$YEAR = as.numeric(govelec$YEAR)
+```
+
+```{r}
+govelec = govelec[-c(347:406),]
+```
+
+```{r}
+library(tidyr)
+govelec = spread(govelec, YEAR, ELECT)
+govelec
+```
+```{r}
+colnames(govelec) = c("COUNTRY", "2019ELECT", "2020ELECT")
+```
+
+
+
+
+##VARIABLE 3: AUSENCIA DE CORRUPCIÓN
+```{r}
+link4= "https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/Ausenciacorrupcion.csv"
+auscorr = import(link4)
+head(auscorr)
+```
+
+```{r}
+auscorr = filter(auscorr, Year>2018)
+```
+
+```{r}
+auscorr = filter(auscorr, Year<2021)
+```
+
+```{r}
+colnames(auscorr) = c("YEAR", "COUNTRY", "AUSCORR")
+auscorr=select(auscorr, YEAR, COUNTRY, AUSCORR)
+```
+
+```{r}
+str(auscorr)
+```
+
+```{r}
+auscorr$YEAR = as.numeric(auscorr$YEAR)
+```
+
+```{r}
+auscorr = auscorr[-c(347:406),]
+```
+
+```{r}
+library(tidyr)
+auscorr = spread(auscorr, YEAR, AUSCORR)
+auscorr
+```
+```{r}
+colnames(auscorr) = c("COUNTRY", "2019AUSCORR", "2020AUSCORR")
+```
+
+--
+
+```{r}
+V1=merge(ISO3,indjust)
+str(V1)
+```
+```{r}
+V2=merge(ISO3,govelec)
+str(V2)
+```
+```{r}
+V3=merge(ISO3,auscorr)
+str(V3)
+```
+--
+
+```{r}
+merge1=merge(V1,V2)
+str(merge1)
+```
+```{r}
+merge2=merge(merge1,V3)
+str(merge2)
+```
+--
+#LIMPIEZA DE VARIABLE DEPENDIENTE "PERCEPCIÓN DE CORRUPCIÓN"
+```{r}
+LinkDep = "https://github.com/santiagomv29/PRACTICAS_ESTA2/blob/main/VARIABLE_DEPENDIENTE.xlsx?raw=true"
+library(rio)
+VDEP = import(LinkDep)
+```
+
+```{r}
+VDEP = VDEP[c(1,2,8,12)]
+colnames(VDEP) = c("COUNTRY", "ISO","PERCOR_2020", "PERCOR_2019")
+VDEP = VDEP[complete.cases(VDEP),]
+VDEP
+```
+
+```{r}
+VASA=merge(merge2,VDEP)
+str(VASA)
+```
+--
+#REGRESIÓN (VARIABLE DEPENDIENTE CON "AUSENCIA DE CORRUPCIÓN", "GOVIERNO ELECTO" E "INDEPENDENCIA DE JUSTICIA")
+```{r}
+REGREVA19 = glm(VASA$PERCOR_2019 ~ VASA$`2019INDEP` + VASA$`2019ELECT` + VASA$`2019AUSCORR`,family = poisson(link = "log"))
+summary(REGREVA19)
+```
+
+```{r}
+REGREVA20 = glm(VASA$PERCOR_2020 ~ VASA$`2020INDEP` + VASA$`2020ELECT` + VASA$`2020AUSCORR`,family = poisson(link = "log"))
+summary(REGREVA20)
+```
+
+
+--
+#LIMPIEZA DE VARIABLE "DESEMPLEO":
+
+```{r}
+Link1 = "https://github.com/santiagomv29/PRACTICAS_ESTA2/blob/main/Variable_1_Santiago_Maldonado.xlsx?raw=true"
+library(rio)
+VIDES = import(Link1)
+
+##OTRA FORMA DE HACERLO:
+
+#library("wbstats")
+#EIn <- wb_cachelist
+#EIn <- wb_search(pattern = "Unemployment")
+#EIn <- wb_search('Unemployment.*total.*% of total #labor force.*modeled ILO estimate')
+#VIDES <- wb_data(indicator = "SL.UEM.TOTL.ZS")
+```
+
+```{r}
+str(VIDES)
+```
+
+```{r}
+library(dplyr)
+library(magrittr)
+VIDES = select(VIDES, -"Indicator Name")
+VIDES = select(VIDES, -"1991")
+VIDES = select(VIDES, -"1992")
+VIDES = select(VIDES, -"1993")
+VIDES = select(VIDES, -"1994")
+VIDES = select(VIDES, -"1995")
+VIDES = select(VIDES, -"1996")
+VIDES = select(VIDES, -"1997")
+VIDES = select(VIDES, -"1998")
+VIDES = select(VIDES, -"1999")
+VIDES = select(VIDES, -"2000")
+VIDES = select(VIDES, -"2001")
+VIDES = select(VIDES, -"2002")
+VIDES = select(VIDES, -"2003")
+VIDES = select(VIDES, -"2004")
+VIDES = select(VIDES, -"2005")
+VIDES = select(VIDES, -"2006")
+VIDES = select(VIDES, -"2007")
+VIDES = select(VIDES, -"2008")
+VIDES = select(VIDES, -"2009")
+VIDES = select(VIDES, -"2010")
+VIDES = select(VIDES, -"2011")
+VIDES = select(VIDES, -"2012")
+VIDES = select(VIDES, -"2013")
+VIDES = select(VIDES, -"2014")
+VIDES = select(VIDES, -"2015")
+VIDES = select(VIDES, -"2016")
+VIDES = select(VIDES, -"2017")
+VIDES = select(VIDES, -"2018")
+VIDES = select(VIDES, -"2021")
+VIDES
+```
+
+```{r}
+colnames(VIDES)[1] = "COUNTRY"
+colnames(VIDES)[2] = "ISO"
+colnames(VIDES)[3] = "DES2019"
+colnames(VIDES)[4] = "DES2020"
+VIDES
+```
+```{r}
+VIDES = VIDES[complete.cases(VIDES),]
+VIDES
+```
+
+```{r}
+as.numeric(VIDES$DES2019)
+as.numeric(VIDES$DES2020)
+str(VIDES)
+```
+
+
+#LIMPIEZA DE VARIABLE "SANEAMIENTO":
+
+```{r}
+Link2 = "https://github.com/santiagomv29/PRACTICAS_ESTA2/blob/main/VARIABLE_SANIDAD2.xlsx?raw=true"
+library(rio)
+VISAN0 = import(Link2)
+VISAN0
+```
+
+```{r}
+str(VISAN0)
+```
+
+```{r}
+library(dplyr)
+library(magrittr)
+VISAN0 = select(VISAN0, -"Residence Type") 
+VISAN0 = select(VISAN0, -"Service Type") 
+VISAN0 = select(VISAN0, -"Population")
+VISAN0
+```
+
+```{r}
+colnames(VISAN0)[1] = "ISO"
+colnames(VISAN0)[2] = "COUNTRY"
+colnames(VISAN0)[3] = "YEAR"
+colnames(VISAN0)[4] = "SANITATION_COVERAGE"
+colnames(VISAN0)[5] = "SERVICE_LEVEL"
+VISAN0
+```
+
+```{r}
+library(dplyr)
+library(magrittr)
+VISAN0 = filter(VISAN0, YEAR %in% c("2019", "2020"))
+VISAN0 = filter(VISAN0, SERVICE_LEVEL %in% c("At least basic"))
+VISAN0
+```
+
+```{r}
+VISAN0 = VISAN0[complete.cases(VISAN0$SANITATION_COVERAGE),]
+VISAN0
+```
+```{r}
+library(dplyr)
+library(magrittr)
+VISAN0 = select(VISAN0, -"SERVICE_LEVEL") 
+VISAN0
+```
+```{r}
+library(tidyr)
+VISANFI = spread(VISAN0, YEAR, SANITATION_COVERAGE)
+VISANFI
+```
+
+```{r}
+colnames(VISANFI)[3] = "SANITATION_2019"
+colnames(VISANFI)[4] = "SANITATION_2020"
+VISANFI
+```
+
+```{r}
+as.numeric(VISANFI$'SANITATION_2019')
+as.numeric(VISANFI$'SANITATION_2020')
+str(VISANFI)
+```
+
+#LIMPIEZA DE VARIABLE "INFLACIÓN":
+
+```{r}
+Link3 = "https://github.com/santiagomv29/PRACTICAS_ESTA2/blob/main/VARIABLE_INFLACION2.xlsx?raw=true"
+library(rio)
+VIINFLA = import(Link3)
+```
+```{r}
+str(VIINFLA)
+```
+```{r}
+library(dplyr)
+library(magrittr)
+VIINFLA = VIINFLA[c(1,2,64,65)]
+```
+
+```{r}
+colnames(VIINFLA)[1] = "COUNTRY"
+colnames(VIINFLA)[2] = "ISO"
+colnames(VIINFLA)[3] = "INFLACION_2019"
+colnames(VIINFLA)[4] = "INFLACION_2020"
+VIINFLA
+```
+
+```{r}
+VIINFLA = VIINFLA[c(4:269),]
+VIINFLA
+```
+
+```{r}
+VIINFLA = VIINFLA[complete.cases(VIINFLA),]
+VIINFLA
+```
+
+```{r}
+VIINFLA$'INFLACION_2019' = as.numeric(VIINFLA$'INFLACION_2019')
+VIINFLA$'INFLACION_2020'= as.numeric(VIINFLA$'INFLACION_2020')
+str(VIINFLA)
+VIINFLA
+```
+
+##UNION DE VARIABLE DEPENDIENTE CON "DESEMPLEO", "SANEAMIENTO" E "INFLACIÓN":
+
+#MERGES UNO A UNO:
+
+```{r}
+MERGEVS =merge(VDEP, VIDES, by = "ISO")
+str(MERGEVS) 
+MERGEVS
+```
+
+```{r}
+MERGEVS = select(MERGEVS, -"COUNTRY.y")
+MERGEVS
+```
+
+```{r}
+MERGEVS2 =merge(VDEP, VISANFI, by = "ISO")
+str(MERGEVS2) 
+MERGEVS2
+```
+
+```{r}
+MERGEVS2 = select(MERGEVS2, -"COUNTRY.y")
+MERGEVS2
+```
+
+```{r}
+MERGEVS3 =merge(VDEP, VIINFLA, by = "ISO")
+str(MERGEVS3) 
+MERGEVS3
+```
+
+```{r}
+MERGEVS3 = select(MERGEVS3, -"COUNTRY.y")
+MERGEVS3
+```
+
+#PROCESO AL MERGE FINAL (VARIABLE DEPENDIENTE CON "DESEMPLEO", "SANEAMIENTO" E "INFLACION"):
+
+```{r}
+MERGEFS1 =merge(MERGEVS, MERGEVS2, by = "ISO")
+str(MERGEFS1) 
+MERGEFS1
+```
+
+```{r}
+MERGEFS1 = select(MERGEFS1, -"PERCOR_2019.y")
+MERGEFS1 = select(MERGEFS1, -"PERCOR_2020.y")
+MERGEFS1 = select(MERGEFS1, -"COUNTRY.x.y")
+MERGEFS1
+```
+
+```{r}
+MERGEFS2 =merge(MERGEFS1, MERGEVS3, by = "ISO")
+str(MERGEFS2) 
+MERGEFS2
+```
+
+```{r}
+MERGEFS2 = select(MERGEFS2, -"PERCOR_2019.x")
+MERGEFS2 = select(MERGEFS2, -"PERCOR_2020.x")
+MERGEFS2 = select(MERGEFS2, -"COUNTRY.x")
+MERGEFS2
+```
+
+#REGRESIÓN (VARIABLE DEPENDIENTE CON "DESEMPLEO", "SANEAMIENTO" E "INFLACION")
+```{r}
+REGREVS19 = glm(MERGEFS2$PERCOR_2019 ~ MERGEFS2$DES2019 + MERGEFS2$SANITATION_2019 + MERGEFS2$INFLACION_2019,family = poisson(link = "log"))
+summary(REGREVS19)
+```
+
+```{r}
+REGREVS20 = glm(MERGEFS2$PERCOR_2020 ~ MERGEFS2$DES2020 + MERGEFS2$SANITATION_2020 + MERGEFS2$INFLACION_2020,family = poisson(link = "log"))
+summary(REGREVS20)
+```
+--
+
+
+#LIMPIEZA DE VARIABLES INDEPENDIENTES: PERCEPCIÓN DE LA DEMOCRACIA, IDH Y LEGITIMIDAD ESTATAL
+
+VARIABLE DEMOCRACIA
+
+```{r}
+library(rio)
+Vardem = "https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540029/1.democracy.csv"
+dataCSV=import(Vardem)
+```
+
+```{r}
+library(dplyr)
+```
+
+Selección de columnas:
+```{r}
+datapar = select(dataCSV, Entity, Code, Year, participdem_vdem_owid)
+head (datapar)
+```
+Filtración de filas:
+```{r}
+datapar = filter(datapar, Year>2018 & Year<2021)
+```
+
+
+Eliminación de filas:
+```{r}
+datapar = datapar[-c(3,4,15,16,109,110,237,238,245,246,251:254,299,300,303,304,363,364,369,370),]
+```
+
+
+Cambio de nombre a las columnas:
+```{r}
+colnames(datapar) = c("Country","Code","Year","Participation")
+```
+
+
+```{r}
+datapar$Year = as.numeric(datapar$Year)
+str(datapar)
+```
+
+
+From Long to Wide (Years):
+```{r}
+library(tidyr)
+datapar <- spread(datapar, Year, Participation)
+```
+
+Cambio de nombre de columnas x2
+```{r}
+colnames(datapar) = c("COUNTRY","ISO","2019PAR","2020PAR")
+```
+
+
+
+VARIABLE IDH
+
+
+```{r}
+library(rio)
+Varidh = "https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9540030/2.HDR21-22_Statistical_Annex_HDI_Trends_Table.xlsx"
+dataxlsx=import(Varidh)
+```
+
+```{r}
+names(dataxlsx)
+```
+
+Eliminación de filas:
+```{r}
+dataidh = dataxlsx[-c(1:5,72,122,168,200:242),]
+```
+
+Selección de columnas:
+```{r}
+dataidh = dataidh[,c(2,13,15)]
+```
+
+Cambio de nombre a las columnas:
+```{r}
+colnames(dataidh) = c("Country","2019","2020")
+```
+
+
+Extracción de cadenas con substr:
+```{r}
+dataidh$`2019`= substr(dataidh$`2019`, star=1,stop=5)
+dataidh$`2020`= substr(dataidh$`2020`, star=1,stop=5)
+```
+
+
+Completando con 0:
+```{r}
+dataidh$`2019` = stringr::str_pad(dataidh$`2019`,5, side = "right", pad = 0)
+dataidh$`2020` = stringr::str_pad(dataidh$`2020`,5, side = "right", pad = 0)
+```
+
+
+```{r}
+dataidh$`2019` = as.numeric(dataidh$`2019`)
+dataidh$`2020` = as.numeric(dataidh$`2020`)
+str(dataidh)
+```
+
+Orden de los países alfabéticamente:
+```{r}
+dataidh = dataidh[order(dataidh$Country), ]
+```
+
+Cambio de nombre de columnas x2
+```{r}
+colnames(dataidh) = c("COUNTRY","2019IDH","2020IDH")
+```
+
+
+
+
+
+
+VARIABLE LEGITIMIDAD
+
+##Variable del 2019
+
+```{r}
+library(rio)
+Varlegt1 = "https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9731172/3.legitimidad2019.xlsx"
+dataleg1=import(Varlegt1)
+```
+
+Selección de columnas:
+```{r}
+datalegt1 = dataleg1[,c(1,2,11)]
+```
+
+Cambio de nombre a las columnas:
+```{r}
+colnames(datalegt1) = c("Country","Year","Legitimacy")
+```
+
+Extracción de cadenas con substr:
+```{r}
+datalegt1$Year = substr(datalegt1$Year, star=1,stop=4)
+```
+
+
+##Variable del 2020
+
+```{r}
+library(rio)
+Varlegt2 = "https://github.com/santiagomv29/PRACTICAS_ESTA2/files/9731175/3.legitimidad2020.xlsx"
+dataleg2=import(Varlegt2)
+```
+
+Selección de columnas:
+```{r}
+datalegt2 = dataleg2[,c(1,2,11)]
+```
+
+Cambio de nombre a las columnas:
+```{r}
+colnames(datalegt2) = c("Country","Year","Legitimacy")
+```
+
+Extracción de cadenas con substr para Year:
+```{r}
+datalegt2$Year = substr(datalegt2$Year, star=1,stop=4)
+```
+
+Extracción de cadenas con substr para índice:
+```{r}
+datalegt2$Legitimacy = substr(datalegt2$Legitimacy, star=1,stop=3)
+```
+
+
+
+
+
+
+##Merge de la variable legitimidad de los años 2019 y 2020
+
+```{r}
+Legti=merge(datalegt1,datalegt2,all=TRUE)
+```
+
+
+Cambio de variables a numéricas:
+```{r}
+Legti$Year = as.numeric(Legti$Year)
+str(Legti$Year)
+```
+
+```{r}
+Legti$Legitimacy = as.numeric(Legti$Legitimacy)
+str(Legti$Legitimacy)
+```
+
+```{r}
+str(Legti)
+```
+
+
+
+From Long to Wide (Years):
+```{r}
+library(tidyr)
+Legti <- spread(Legti, Year, Legitimacy)
+```
+
+
+Cambio de nombre de columnas x2
+```{r}
+colnames(Legti) = c("COUNTRY","2019LEG","2020LEG")
+```
+
+
+
+
+#ESTABLECIENDO EL ISO GENERAL
+ISO DE PAÍSES
+
+```{r}
+library(rio)
+iso="https://gist.github.com/brenes/1095110/raw/c8f208b03485ba28f97c500ab7271e8bce43b9c6/paises.csv"
+ISO=import(iso)
+```
+
+```{r}
+ISO = ISO[,c(2,5)]
+```
+
+```{r}
+colnames(ISO) = c("COUNTRY","ISO")
+```
+
+
+
+
+#Variable dataidh
+
+```{r}
+vidh=merge(ISO,dataidh,all=TRUE)
+str(vidh)
+```
+
+Casos completos:
+```{r}
+vidh = vidh[complete.cases(vidh),]
+```
+
+
+#Variable Legti
+
+```{r}
+vleg=merge(Legti,ISO,all=TRUE)
+str(vleg)
+```
+
+
+Casos completos:
+```{r}
+vleg = vleg[complete.cases(vleg),]
+```
+
+
+
+
+
+
+
+VARIABLE DEPENDIENTE
+#LIMPIEZA DE VARIABLE DEPENDIENTE "PERCEPCIÓN DE CORRUPCIÓN":
+
+```{r}
+LinkDep = "https://github.com/santiagomv29/PRACTICAS_ESTA2/blob/main/VARIABLE_DEPENDIENTE.xlsx?raw=true"
+library(rio)
+VDEP = import(LinkDep)
+VDEP
+```
+
+```{r}
+VDEP = VDEP[c(1,2,8,12)]
+VDEP
+```
+
+```{r}
+colnames(VDEP)[1] = "COUNTRY"
+colnames(VDEP)[2] = "ISO"
+colnames(VDEP)[3] = "PERCOR_2020"
+colnames(VDEP)[4] = "PERCOR_2019"
+VDEP
+```
+
+```{r}
+VDEP = VDEP[complete.cases(VDEP),]
+VDEP
+```
+
+```{r}
+as.numeric(VDEP$'PERCOR_2020')
+as.numeric(VDEP$'PERCOR_2019')
+str(VDEP)
+```
+
+
+##UNION DE VARIABLE DEPENDIENTE CON "PERCEPCIÓN DE DEMOCRACIA", "IDH" Y "LEGITIMIDAD ESTATAL":
+
+#MERGES UNO A UNO:
+
+Variable participación:
+
+```{r}
+MERGEPAR =merge(VDEP, datapar, by = "ISO")
+str(MERGEPAR) 
+MERGEPAR
+```
+
+```{r}
+MERGEPAR = select(MERGEPAR, -"COUNTRY.y")
+MERGEPAR
+```
+
+
+
+Variable IDH:
+
+```{r}
+MERGEIDH =merge(VDEP, vidh, by = "ISO")
+str(MERGEIDH)
+```
+
+```{r}
+MERGEIDH = select(MERGEIDH, -"COUNTRY.y")
+```
+
+
+
+Variable Legitimidad:
+
+```{r}
+MERGELEG =merge(VDEP, vleg, by = "ISO")
+str(MERGELEG)
+```
+
+```{r}
+MERGELEG = select(MERGELEG, -"COUNTRY.y")
+```
+
+
+
+
+
+#PROCESO DE MERGE FINAL: VARIABLE DEPENDIENTE CON "PERCEPCIÓN DE LA DEMOCRACIA", "IDH" Y "LEGITIMIDAD ESTATAL":
+
+```{r}
+MERGEVARS1 =merge(MERGEPAR, MERGEIDH, by = "ISO")
+str(MERGEVARS1)
+```
+
+```{r}
+MERGEVARS1 = select(MERGEVARS1, -"PERCOR_2019.y")
+MERGEVARS1 = select(MERGEVARS1, -"PERCOR_2020.y")
+MERGEVARS1 = select(MERGEVARS1, -"COUNTRY.x.y")
+```
+
+```{r}
+MERGEVARS2 =merge(MERGEVARS1, MERGELEG, by = "ISO")
+str(MERGEVARS2)
+```
+
+```{r}
+MERGEVARS2 = select(MERGEVARS2, -"PERCOR_2019.x")
+MERGEVARS2 = select(MERGEVARS2, -"PERCOR_2020.x")
+MERGEVARS2 = select(MERGEVARS2, -"COUNTRY.x")
+```
+
+
+
+
+
+#REGRESIÓN CON VARIABLES INDEPENDIENTES DE PERCEPCIÓN DE LA DEMOCRACIA, IDH Y LEGITIMIDAD ESTATAL EN EL AÑO 2019
+
+
+```{r}
+REGREVANA19 = glm(MERGEVARS2$PERCOR_2019 ~ MERGEVARS2$`2019PAR` + MERGEVARS2$`2019IDH` + MERGEVARS2$`2019LEG`,family = poisson(link = "log"))
+summary(REGREVANA19)
+```
+
+
+
+#REGRESIÓN CON VARIABLES INDEPENDIENTES DE PERCEPCIÓN DE LA DEMOCRACIA, IDH Y LEGITIMIDAD ESTATAL EN EL AÑO 2020
+
+
+```{r}
+REGREVANA20 = glm(MERGEVARS2$PERCOR_2020 ~ MERGEVARS2$`2020PAR` + MERGEVARS2$`2020IDH` + MERGEVARS2$`2020LEG`,family = poisson(link = "log"))
+summary(REGREVANA20)
+```
+
+--
+
+```{r}
+MERGEFINAL =merge(VASA, MERGEVARS2, by = "ISO")
+str(MERGEFINAL)
+```
+
+```{r}
+UNIFICADA =merge(MERGEFINAL, MERGEFS2, by = "ISO")
+str(UNIFICADA)
+```
+```{r}
+UNIFICADA = select(UNIFICADA, -"COUNTRY.x.x.x")
+UNIFICADA = select(UNIFICADA, -"COUNTRY.x.x.y")
+UNIFICADA = select(UNIFICADA, -"PERCOR_2020.x")
+UNIFICADA = select(UNIFICADA, -"PERCOR_2019.x")
+UNIFICADA = select(UNIFICADA, -"PERCOR_2020.y")
+UNIFICADA = select(UNIFICADA, -"PERCOR_2019.y")
+```
+
+
+
+--
+
+```{r}
+library(rio)
+export(UNIFICADA, "dataunificada.csv")
+```
+
+
+
+
