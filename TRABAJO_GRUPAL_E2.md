@@ -33,15 +33,14 @@ https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?view=chart
 
 ## Variables - Data sucia - Andrea Salas Angles
 
-+ Gastos en educación
-+ Archivo: https://www.cia.gov/the-world-factbook/field/education-expenditures/country-comparison
-
 + Independencia de la justicia 
 + Archivo: https://www.idea.int/gsod-indices/world-map-table
 
 + Gobierno elegido 
 + Archivo: https://www.idea.int/gsod-indices/world-map-table
 
++ Ausencia de corrupción
++ Archivo: https://www.idea.int/gsod-indices/world-map-table
 
 ## Variables - Data sucia - Ana Goñi
 
