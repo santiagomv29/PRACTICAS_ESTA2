@@ -63,12 +63,12 @@ https://fragilestatesindex.org/indicators/p1/
 
 ## RMD de limpieza:
 
-+ Archivo:
++ Archivo: https://github.com/santiagomv29/PRACTICAS_ESTA2/blob/main/Entregable2.Rmd
 
 ## Base de datos unificada:
 
-+ Archivo:
++ Archivo: https://github.com/santiagomv29/PRACTICAS_ESTA2/blob/main/dataunificada.csv
 
 ## RMD y HTML con las regresiones de los 3 integrantes:
 
-+ Archivo:
++ Archivo: https://github.com/santiagomv29/PRACTICAS_ESTA2/blob/main/Entregable2.html
