@@ -22,10 +22,10 @@ library(cluster)
 ```
 
 
-El objetivo del presente trabajo es analizar los resultados de la percepción de corrupción a nivel global en los años 2019 y 2020. 
+El objetivo del presente trabajo es analizar los resultados de la percepción de corrupción a nivel global en los años 2019 y 2020. Escogimos este periodo temporal por el cambio drástico que generó la propagación del virus COVID-19 en el desarrollo económico, político y social. En ese sentido, intentamos determinar si la pandemia realmente tuvo un impacto significativo en la percepción ciudadana.  
 
 
-# 1. Datos previos 
+# 1. Datos previos al análisis 
 
 + La variable dependiente escogida para este estudio es la "Percepción de corrupción" (PERCOR). 
 + Se ha eliminado la variable independiente "Saneamiento", esto debido a que la base de datos ofrecia muy pocos casos para el análisis. 
