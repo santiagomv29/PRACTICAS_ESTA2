@@ -1,68 +1,79 @@
 ---
-title: "index"
-author: "Santiago Maldonado Vizcarra_Andrea Salas_Ana Goñi"
-date: "2022-10-29"
+title: "La percepción de corrupción a nivel global entre 2019 y 2020"
+
+subtitle: 'Curso: POL304 - Estadística para el análisis político 2'
+
+author: "Santiago Maldonado Vizcarra, Andrea Salas y Ana Goñi"
+
+date: "Noviembre, 2022"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-# BASE DE DATOS UNIFICADA:
+El objetivo del presente trabajo es analizar los resultados de la percepción de corrupción a nivel global en los años 2019 y 2020. 
 
-```{r}
+
+# Datos previos 
+
++ La variable dependiente escogida para este estudio es la "Percepción de corrupción" (PERCOR). 
++ Se ha eliminado la variable independiente "Saneamiento", esto debido a que la base de datos ofrecia muy pocos casos para el análisis. 
+
+
+# Base de datos unificada
+
+```{r include=FALSE}
 LinkBDU = "https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/base_dataunificada.csv"
 library(rio)
 BDU = import(LinkBDU)
 ```
 
-# REGRESIONES - VARIABLE DEPENDIENTE "PERCEPCIÓN DE CORRUPCIÓN"
 
-# REGRESIÓN CON VARIABLES INDEPENDIENTES "INDEPENDENCIA DE JUSTICIA", "GOBIERNO ELECTO" Y "AUSENCIA DE CORRUPCIÓN"
+# Regresión con variables independientes "Independencia de justicia", "Gobierno electo" y "Ausencia de corrupción"
 
-## AÑO 2019
+## Año 2019
 
-```{r}
+```{r include=FALSE}
 REGREVA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR`,family = poisson(link = "log"))
 summary(REGREVA19)
 ```
 
-## AÑO 2020
+## Año 2020
 
-```{r}
+```{r include=FALSE}
 REGREVA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`,family = poisson(link = "log"))
 summary(REGREVA20)
 ```
 
-# REGRESIÓN CON VARIABLES INDEPENDIENTES "DESEMPLEO" E "INFLACIÓN"
 
-## AÑO 2019
+# Regresión con variables independientes "Desempleo" e "Inflación"
 
-```{r}
+## Año 2019
+
+```{r include=FALSE}
 REGREVS19 = glm(BDU$PERCOR_2019.y.x ~ BDU$DES2019 + BDU$INFLACION_2019,family = poisson(link = "log"))
 summary(REGREVS19)#CORREGIR
 ```
 
-## AÑO 2020
+## Año 2020
 
-```{r}
+```{r include=FALSE}
 REGREVS20 = glm(BDU$PERCOR_2020.y.x ~ BDU$DES2020 + BDU$INFLACION_2020,family = poisson(link = "log"))
 summary(REGREVS20)
 ```
 
-#REGRESIÓN CON VARIABLES INDEPENDIENTES "PERCEPCIÓN DE LA DEMOCRACIA", "IDH" Y "LEGITIMIDAD ESTATAL"
 
-##AÑO 2019
+# Regresión con variables independientes "Percepción de la democracia", "IDH" y "Legitimidad estatal"
 
-```{r}
+## Año 2019
+
+```{r include=FALSE}
 REGREVANA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`,family = poisson(link = "log"))
 summary(REGREVANA19)
 ```
 
-##AÑO 2020
+## Año 2020
 
-```{r}
+```{r include=FALSE}
 REGREVANA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`,family = poisson(link = "log"))
 summary(REGREVANA20)
 ```

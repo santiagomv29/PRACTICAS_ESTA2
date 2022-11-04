@@ -9,11 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Santiago Maldonado Vizcarra_Andrea Salas_Ana Goñi" />
+<meta name="author" content="Santiago Maldonado Vizcarra, Andrea Salas y Ana Goñi" />
 
-<meta name="date" content="2022-10-29" />
 
-<title>index</title>
+<title>La percepción de corrupción a nivel global entre 2019 y 2020</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -363,205 +362,59 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">index</h1>
-<h4 class="author">Santiago Maldonado Vizcarra_Andrea Salas_Ana
+<h1 class="title toc-ignore">La percepción de corrupción a nivel global
+entre 2019 y 2020</h1>
+<h3 class="subtitle">Curso: POL304 - Estadística para el análisis
+político 2</h3>
+<h4 class="author">Santiago Maldonado Vizcarra, Andrea Salas y Ana
 Goñi</h4>
-<h4 class="date">2022-10-29</h4>
+<h4 class="date">Noviembre, 2022</h4>
 
 </div>
 
 
+<p>El objetivo del presente trabajo es analizar los resultados de la
+percepción de corrupción a nivel global en los años 2019 y 2020.</p>
+<div id="datos-previos" class="section level1">
+<h1>Datos previos</h1>
+<ul>
+<li>La variable dependiente escogida para este estudio es la “Percepción
+de corrupción” (PERCOR).</li>
+<li>Se ha eliminado la variable independiente “Saneamiento”, esto debido
+a que la base de datos ofrecia muy pocos casos para el análisis.</li>
+</ul>
+</div>
 <div id="base-de-datos-unificada" class="section level1">
-<h1>BASE DE DATOS UNIFICADA:</h1>
-<pre class="r"><code>LinkBDU = &quot;https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/base_dataunificada.csv&quot;
-library(rio)
-BDU = import(LinkBDU)</code></pre>
-</div>
-<div id="regresiones---variable-dependiente-percepción-de-corrupción" class="section level1">
-<h1>REGRESIONES - VARIABLE DEPENDIENTE “PERCEPCIÓN DE CORRUPCIÓN”</h1>
+<h1>Base de datos unificada</h1>
 </div>
 <div id="regresión-con-variables-independientes-independencia-de-justicia-gobierno-electo-y-ausencia-de-corrupción" class="section level1">
-<h1>REGRESIÓN CON VARIABLES INDEPENDIENTES “INDEPENDENCIA DE JUSTICIA”,
-“GOBIERNO ELECTO” Y “AUSENCIA DE CORRUPCIÓN”</h1>
+<h1>Regresión con variables independientes “Independencia de justicia”,
+“Gobierno electo” y “Ausencia de corrupción”</h1>
 <div id="año-2019" class="section level2">
-<h2>AÑO 2019</h2>
-<pre class="r"><code>REGREVA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR`,family = poisson(link = &quot;log&quot;))
-summary(REGREVA19)</code></pre>
-<pre><code>## 
-## Call:
-## glm(formula = BDU$PERCOR_2019.y.x ~ BDU$`2019INDEP` + BDU$`2019ELECT` + 
-##     BDU$`2019AUSCORR`, family = poisson(link = &quot;log&quot;))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -4.2025  -0.5568  -0.1124   0.5792   2.3995  
-## 
-## Coefficients:
-##                   Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)        2.91257    0.04701  61.958   &lt;2e-16 ***
-## BDU$`2019INDEP`    0.13653    0.11915   1.146   0.2518    
-## BDU$`2019ELECT`   -0.15773    0.06876  -2.294   0.0218 *  
-## BDU$`2019AUSCORR`  1.76203    0.09722  18.125   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for poisson family taken to be 1)
-## 
-##     Null deviance: 995.40  on 126  degrees of freedom
-## Residual deviance: 138.43  on 123  degrees of freedom
-## AIC: 853.21
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
+<h2>Año 2019</h2>
 </div>
 <div id="año-2020" class="section level2">
-<h2>AÑO 2020</h2>
-<pre class="r"><code>REGREVA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`,family = poisson(link = &quot;log&quot;))
-summary(REGREVA20)</code></pre>
-<pre><code>## 
-## Call:
-## glm(formula = BDU$PERCOR_2020.y.x ~ BDU$`2020INDEP` + BDU$`2020ELECT` + 
-##     BDU$`2020AUSCORR`, family = poisson(link = &quot;log&quot;))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -3.8756  -0.5782  -0.0237   0.6288   2.5705  
-## 
-## Coefficients:
-##                   Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)        2.91300    0.04702  61.946   &lt;2e-16 ***
-## BDU$`2020INDEP`    0.09766    0.12219   0.799   0.4242    
-## BDU$`2020ELECT`   -0.13343    0.06987  -1.910   0.0562 .  
-## BDU$`2020AUSCORR`  1.78007    0.09809  18.147   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for poisson family taken to be 1)
-## 
-##     Null deviance: 984.38  on 126  degrees of freedom
-## Residual deviance: 133.79  on 123  degrees of freedom
-## AIC: 849.47
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
+<h2>Año 2020</h2>
 </div>
 </div>
 <div id="regresión-con-variables-independientes-desempleo-e-inflación" class="section level1">
-<h1>REGRESIÓN CON VARIABLES INDEPENDIENTES “DESEMPLEO” E
-“INFLACIÓN”</h1>
+<h1>Regresión con variables independientes “Desempleo” e
+“Inflación”</h1>
 <div id="año-2019-1" class="section level2">
-<h2>AÑO 2019</h2>
-<pre class="r"><code>REGREVS19 = glm(BDU$PERCOR_2019.y.x ~ BDU$DES2019 + BDU$INFLACION_2019,family = poisson(link = &quot;log&quot;))
-summary(REGREVS19)#CORREGIR</code></pre>
-<pre><code>## 
-## Call:
-## glm(formula = BDU$PERCOR_2019.y.x ~ BDU$DES2019 + BDU$INFLACION_2019, 
-##     family = poisson(link = &quot;log&quot;))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -5.0661  -2.1681  -0.8894   1.7106   5.2072  
-## 
-## Coefficients:
-##                     Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)         3.893551   0.021323 182.596  &lt; 2e-16 ***
-## BDU$DES2019        -0.007628   0.002502  -3.049   0.0023 ** 
-## BDU$INFLACION_2019 -0.006283   0.001047  -5.999 1.98e-09 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for poisson family taken to be 1)
-## 
-##     Null deviance: 995.40  on 126  degrees of freedom
-## Residual deviance: 924.93  on 124  degrees of freedom
-## AIC: 1637.7
-## 
-## Number of Fisher Scoring iterations: 5</code></pre>
+<h2>Año 2019</h2>
 </div>
 <div id="año-2020-1" class="section level2">
-<h2>AÑO 2020</h2>
-<pre class="r"><code>REGREVS20 = glm(BDU$PERCOR_2020.y.x ~ BDU$DES2020 + BDU$INFLACION_2020,family = poisson(link = &quot;log&quot;))
-summary(REGREVS20)</code></pre>
-<pre><code>## 
-## Call:
-## glm(formula = BDU$PERCOR_2020.y.x ~ BDU$DES2020 + BDU$INFLACION_2020, 
-##     family = poisson(link = &quot;log&quot;))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -5.3806  -2.1763  -0.7915   1.8305   5.3200  
-## 
-## Coefficients:
-##                      Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)         3.8900104  0.0223571 173.994  &lt; 2e-16 ***
-## BDU$DES2020        -0.0067011  0.0022866  -2.931  0.00338 ** 
-## BDU$INFLACION_2020 -0.0025239  0.0004715  -5.353 8.67e-08 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for poisson family taken to be 1)
-## 
-##     Null deviance: 984.38  on 126  degrees of freedom
-## Residual deviance: 929.27  on 124  degrees of freedom
-## AIC: 1643
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
-<p>#REGRESIÓN CON VARIABLES INDEPENDIENTES “PERCEPCIÓN DE LA
-DEMOCRACIA”, “IDH” Y “LEGITIMIDAD ESTATAL”</p>
-<p>##AÑO 2019</p>
-<pre class="r"><code>REGREVANA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`,family = poisson(link = &quot;log&quot;))
-summary(REGREVANA19)</code></pre>
-<pre><code>## 
-## Call:
-## glm(formula = BDU$PERCOR_2019.y.x ~ BDU$`2019PAR` + BDU$`2019IDH` + 
-##     BDU$`2019LEG`, family = poisson(link = &quot;log&quot;))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -3.1233  -0.8545  -0.1708   0.7934   3.5983  
-## 
-## Coefficients:
-##               Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)    3.48878    0.14465  24.118   &lt;2e-16 ***
-## BDU$`2019PAR` -0.23776    0.11990  -1.983   0.0474 *  
-## BDU$`2019IDH`  1.16684    0.12217   9.551   &lt;2e-16 ***
-## BDU$`2019LEG` -0.09317    0.00961  -9.695   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for poisson family taken to be 1)
-## 
-##     Null deviance: 995.40  on 126  degrees of freedom
-## Residual deviance: 201.35  on 123  degrees of freedom
-## AIC: 916.13
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
-<p>##AÑO 2020</p>
-<pre class="r"><code>REGREVANA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`,family = poisson(link = &quot;log&quot;))
-summary(REGREVANA20)</code></pre>
-<pre><code>## 
-## Call:
-## glm(formula = BDU$PERCOR_2020.y.x ~ BDU$`2020PAR` + BDU$`2020IDH` + 
-##     BDU$`2020LEG`, family = poisson(link = &quot;log&quot;))
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -3.0501  -0.9479  -0.1422   0.8046   3.8752  
-## 
-## Coefficients:
-##                Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)    3.238450   0.135843  23.840   &lt;2e-16 ***
-## BDU$`2020PAR` -0.100620   0.113556  -0.886    0.376    
-## BDU$`2020IDH`  1.305302   0.122469  10.658   &lt;2e-16 ***
-## BDU$`2020LEG` -0.074019   0.008798  -8.413   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for poisson family taken to be 1)
-## 
-##     Null deviance: 984.38  on 126  degrees of freedom
-## Residual deviance: 212.46  on 123  degrees of freedom
-## AIC: 928.15
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
+<h2>Año 2020</h2>
+</div>
+</div>
+<div id="regresión-con-variables-independientes-percepción-de-la-democracia-idh-y-legitimidad-estatal" class="section level1">
+<h1>Regresión con variables independientes “Percepción de la
+democracia”, “IDH” y “Legitimidad estatal”</h1>
+<div id="año-2019-2" class="section level2">
+<h2>Año 2019</h2>
+</div>
+<div id="año-2020-2" class="section level2">
+<h2>Año 2020</h2>
 </div>
 </div>
 
