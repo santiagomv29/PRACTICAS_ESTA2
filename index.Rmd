@@ -49,11 +49,33 @@ REGREVA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2
 summary(REGREVA19)
 ```
 
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVA19, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('PERCOR.y.x'=BDU)
+modelsummary(REGREVA19, title = "Poisson",
+             stars = TRUE,
+             output = "kableExtra")
+```
+
 ## Año 2020
 
 ```{r include=FALSE}
 REGREVA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`,family = poisson(link = "log"))
 summary(REGREVA20)
+```
+
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVA20, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('PERCOR.y.x'=BDU)
+modelsummary(REGREVA20, title = "Poisson",
+             stars = TRUE,
+             output = "kableExtra")
 ```
 
 
@@ -66,6 +88,17 @@ REGREVS19 = glm(BDU$PERCOR_2019.y.x ~ BDU$DES2019 + BDU$INFLACION_2019,family = 
 summary(REGREVS19)#CORREGIR
 ```
 
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVS19, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('PERCOR.y.x'=BDU)
+modelsummary(REGREVS19, title = "Poisson",
+             stars = TRUE,
+             output = "kableExtra")
+```
+
 ## Año 2020
 
 ```{r include=FALSE}
@@ -73,6 +106,16 @@ REGREVS20 = glm(BDU$PERCOR_2020.y.x ~ BDU$DES2020 + BDU$INFLACION_2020,family = 
 summary(REGREVS20)
 ```
 
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVS20, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('PERCOR.y.x'=BDU)
+modelsummary(REGREVS20, title = "Poisson",
+             stars = TRUE,
+             output = "kableExtra")
+```
 
 # Regresión con variables independientes "Percepción de la democracia", "IDH" y "Legitimidad estatal"
 
@@ -83,6 +126,17 @@ REGREVANA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`201
 summary(REGREVANA19)
 ```
 
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVANA19, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('PERCOR.y.x'=BDU)
+modelsummary(REGREVANA19, title = "Poisson",
+             stars = TRUE,
+             output = "kableExtra")
+```
+
 ## Año 2020
 
 ```{r include=FALSE}
@@ -90,6 +144,15 @@ REGREVANA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`202
 summary(REGREVANA20)
 ```
 
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVANA20, use_coefs = TRUE)
+```
 
+```{r echo=FALSE}
+model=list('PERCOR.y.x'=BDU)
+modelsummary(REGREVANA20, title = "Poisson",
+             stars = TRUE,
+             output = "kableExtra")
+```
 
 
