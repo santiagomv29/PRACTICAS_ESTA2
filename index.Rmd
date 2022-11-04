@@ -11,7 +11,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # BASE DE DATOS UNIFICADA:
 
-
+```{r}
+LinkBDU = "https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/base_dataunificada.csv"
+library(rio)
+BDU = import(LinkBDU)
+```
 
 # REGRESIONES - VARIABLE DEPENDIENTE "PERCEPCIÓN DE CORRUPCIÓN"
 
@@ -20,31 +24,31 @@ knitr::opts_chunk$set(echo = TRUE)
 ## AÑO 2019
 
 ```{r}
-REGREVA19 = glm(VASA$PERCOR_2019 ~ VASA$`2019INDEP` + VASA$`2019ELECT` + VASA$`2019AUSCORR`,family = poisson(link = "log"))
+REGREVA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR`,family = poisson(link = "log"))
 summary(REGREVA19)
 ```
 
 ## AÑO 2020
 
 ```{r}
-REGREVA20 = glm(VASA$PERCOR_2020 ~ VASA$`2020INDEP` + VASA$`2020ELECT` + VASA$`2020AUSCORR`,family = poisson(link = "log"))
+REGREVA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`,family = poisson(link = "log"))
 summary(REGREVA20)
 ```
 
-# REGRESIÓN CON VARIABLES INDEPENDIENTES "DESEMPLEO", "SANEAMIENTO" E "INFLACIÓN"
+# REGRESIÓN CON VARIABLES INDEPENDIENTES "DESEMPLEO" E "INFLACIÓN"
 
 ## AÑO 2019
 
 ```{r}
-REGREVS19 = glm(MERGEFS2$PERCOR_2019 ~ MERGEFS2$DES2019 + MERGEFS2$SANITATION_2019 + MERGEFS2$INFLACION_2019,family = poisson(link = "log"))
+REGREVS19 = glm(BDU$PERCOR_2019.y.x ~ BDU$DES2019 + BDU$INFLACION_2019,family = poisson(link = "log"))
 summary(REGREVS19)#CORREGIR
 ```
 
 ## AÑO 2020
 
 ```{r}
-REGREVS20 = glm(MERGEFS2$PERCOR_2020 ~ MERGEFS2$DES2020 + MERGEFS2$SANITATION_2020 + MERGEFS2$INFLACION_2020,family = poisson(link = "log"))
-summary(REGREVS20)#CORREGIR
+REGREVS20 = glm(BDU$PERCOR_2020.y.x ~ BDU$DES2020 + BDU$INFLACION_2020,family = poisson(link = "log"))
+summary(REGREVS20)
 ```
 
 #REGRESIÓN CON VARIABLES INDEPENDIENTES "PERCEPCIÓN DE LA DEMOCRACIA", "IDH" Y "LEGITIMIDAD ESTATAL"
@@ -52,14 +56,17 @@ summary(REGREVS20)#CORREGIR
 ##AÑO 2019
 
 ```{r}
-REGREVANA19 = glm(MERGEVARS2$PERCOR_2019 ~ MERGEVARS2$`2019PAR` + MERGEVARS2$`2019IDH` + MERGEVARS2$`2019LEG`,family = poisson(link = "log"))
+REGREVANA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`,family = poisson(link = "log"))
 summary(REGREVANA19)
 ```
 
 ##AÑO 2020
 
 ```{r}
-REGREVANA20 = glm(MERGEVARS2$PERCOR_2020 ~ MERGEVARS2$`2020PAR` + MERGEVARS2$`2020IDH` + MERGEVARS2$`2020LEG`,family = poisson(link = "log"))
+REGREVANA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`,family = poisson(link = "log"))
 summary(REGREVANA20)
+```
+
+
 
 
