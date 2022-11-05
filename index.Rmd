@@ -4,13 +4,9 @@ subtitle: 'Curso: POL304 - Estadística para el análisis político 2'
 author: "Santiago Maldonado Vizcarra, Andrea Salas y Ana Goñi"
 date: "Noviembre, 2022"
 output:
-<<<<<<< HEAD
-prettydoc::html_pretty:
-=======
-  prettydoc::html_pretty:
->>>>>>> 1d6d0e14ec89bac6916d4643b6757677faffbb0c
-    theme: cayman
-    highlight: github
+ prettydoc::html_pretty:
+  theme: cayman
+  highlight: github
 ---
 
 
@@ -59,11 +55,6 @@ colnames(BDU)[18] = "2020DES"
 colnames(BDU)[22] = "2019INFLACION"
 colnames(BDU)[23] = "2020INFLACION"
 ```
-
-```{r echo=FALSE}
-datatable(BDU, filter = "top")
-```
-
 
 
 # 3. Regresión con variables independientes "Independencia de justicia", "Gobierno electo" y "Ausencia de corrupción"
@@ -310,13 +301,6 @@ V_LEG20=exp(LEGITIMIDAD20)
 
 
 Para el modelo del 2019, la percepción de la corrupción va a disminuir en un 26.8% al aumentar el índice  de democracia, además, va a aumentar en un 321% al aumentar en un punto el IDH y va a disminuir en un 9.8% cuando la legitimidad estatal aumenta.
-<<<<<<< HEAD
-
-Para el modelo del año 2020, la percepción de la corrupción va a disminuir en un 10.6% frente al aumento del índice de democracia, asimismo, va a aumentar en un 369% al aumentar en un punto el IDH y va a disminuir en un 7.7% cuando la legitimidad estatal aumenta.
-
-En los modelos de los años 2019 y 2020, los predictores de legitimidad estatal e IDH se muestran muy significativos; es decir, estas variables causan gran impacto en la percepción de la corrupción. Sin embargo, se evidencia que la variable de índice de democracia pierde significancia entre estos mismos años, por lo que no resulta muy significativa. Ello indica que el indice de democracia, respecto a paises en los que hay elecciones y competitividad política, no impacta realmente en la percepción de la corrupción de los ciudadanos.
-=======
->>>>>>> 1d6d0e14ec89bac6916d4643b6757677faffbb0c
 
 Para el modelo del año 2020, la percepción de la corrupción va a disminuir en un 10.6% frente al aumento del índice de democracia, asimismo, va a aumentar en un 369% al aumentar en un punto el IDH y va a disminuir en un 7.7% cuando la legitimidad estatal aumenta.
 
