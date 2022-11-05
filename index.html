@@ -2010,6 +2010,9 @@ RMSE
 </tr>
 </tfoot>
 </table>
+<pre><code>## [1] 114.6294</code></pre>
+<pre><code>## [1] -17.0848</code></pre>
+<pre><code>## [1] 582.4238</code></pre>
 </div>
 <div id="año-2020" class="section level2">
 <h2>3.2. Año 2020</h2>
@@ -2127,6 +2130,32 @@ RMSE
 </tr>
 </tfoot>
 </table>
+<pre><code>## [1] 110.2583</code></pre>
+<pre><code>## [1] -14.2745</code></pre>
+<pre><code>## [1] 593.0256</code></pre>
+</div>
+<div id="análisis-de-resultados" class="section level2">
+<h2>3.3. Análisis de resultados:</h2>
+<p>En el modelo del 2019, la percepción de la corrupción va a aumentar
+en un 115% al aumentar la independencia de justicia. También aumentará
+en 582% al aumentar el indice de ausencia de corrupción. Además,
+disminuirá en un 17.1% en respuesta a las composición decisiones y
+acciones del gobierno electo.</p>
+<p>Para el modelo del año 2020, la percepción de la corrupción va a
+aumentar en un 110% al aumentar la independencia de justicia. También
+aumentará en 593% al aumentar el indice de ausencia de corrupción.
+Además, disminuirá en un 14.3% en respuesta a las composición decisiones
+y acciones del gobierno electo.</p>
+<p>En los modelos de los años 2019 y 2020, los predictores de
+independencia de justicia y gobierno electo son poco significativos. En
+consecuencia, no se puede decir que estas variables impacten en la
+percepción de la corrupción, esto a pesar de que la variable gobierno
+electo gana cierto grado de significancia en 2020. Por otro lado, la
+predictora ausencia de corrupción no solo es significativa, sino que
+incrementa su valor de 2019 a 2020. Es interesante ver como la “ausencia
+de corrupción” esta generando un incremento en la “percepción de
+corrupción”. Esto nos lleva a pensar que las mediciones no fueron hechas
+de manera adecuada (o se escogieron mal los parametros.</p>
 </div>
 </div>
 <div id="regresión-con-variables-independientes-desempleo-e-inflación" class="section level1">
@@ -2232,13 +2261,15 @@ RMSE
 </tr>
 </tfoot>
 </table>
+<pre><code>## [1] -0.7657597</code></pre>
+<pre><code>## [1] -0.6302485</code></pre>
 </div>
 <div id="año-2020-1" class="section level2">
 <h2>4.2. Año 2020</h2>
 <p><span class="math display">\[
-\log ({ \widehat{E( \operatorname{BDU} )} })  = 3.9 -
-0.01(\operatorname{BDU\$`2020DES`}) -
-0.01(\operatorname{BDU\$`2019INFLACION`})
+\log ({ \widehat{E( \operatorname{BDU} )} })  = 3.89 -
+0.01(\operatorname{BDU\$`2020DES`}) +
+0(\operatorname{BDU\$`2020INFLACION`})
 \]</span></p>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
 <caption>
@@ -2259,7 +2290,7 @@ Model 1
 (Intercept)
 </td>
 <td style="text-align:center;">
-3.898***
+3.890***
 </td>
 </tr>
 <tr>
@@ -2274,7 +2305,7 @@ Model 1
 BDU$2020DES
 </td>
 <td style="text-align:center;">
--0.006**
+-0.007**
 </td>
 </tr>
 <tr>
@@ -2286,17 +2317,17 @@ BDU$2020DES
 </tr>
 <tr>
 <td style="text-align:left;">
-BDU$2019INFLACION
+BDU$2020INFLACION
 </td>
 <td style="text-align:center;">
--0.006***
+-0.003***
 </td>
 </tr>
 <tr>
 <td style="text-align:left;box-shadow: 0px 1px">
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.001)
+(0.0005)
 </td>
 </tr>
 <tr>
@@ -2312,7 +2343,7 @@ Num.Obs.
 F
 </td>
 <td style="text-align:center;">
-23.834
+19.655
 </td>
 </tr>
 <tr>
@@ -2320,7 +2351,7 @@ F
 RMSE
 </td>
 <td style="text-align:center;">
-18.37
+18.52
 </td>
 </tr>
 </tbody>
@@ -2333,6 +2364,27 @@ RMSE
 </tr>
 </tfoot>
 </table>
+<pre><code>## [1] -0.6723604</code></pre>
+<pre><code>## [1] -0.2527088</code></pre>
+</div>
+<div id="análisis-de-resultados-1" class="section level2">
+<h2>4.3 Análisis de resultados:</h2>
+<p>Para el modelo del 2019, la percepción de la corrupción va a
+disminuir en un 0.76% a medida que aumenta el desempleo y, siguiendo esa
+tendencia, disminuirá en un 0.63% al aumentar en un punto la
+inflación.</p>
+<p>Para el modelo del año 2020, la percepción de la corrupción va a
+disminuir en un 0.67% en respuesta al aumento del desempleo. Asi mismo,
+disminuirá en 0.25% cuando la inflación aumente en un punto.</p>
+<p>En los modelos de los años 2019 y 2020, tanto el predictor de
+desempleo como el de inflación registran estimates significativos
+(visibilizado en los asteriscos). En ese sentido, es claro que ambas
+variables impactan sobre la percepción de la corrupción. Sin embargo,
+los resultados de 2020 son incluso más bajos que los de 2019. Esto
+implica que la emergencia sanitaria provocada por la propagación del
+COVID-19 no tuvo un efecto tan fuerte en estos problemas socioeconómicos
+como se tiende a pensar. Por ello, el impacto sobre la variable
+dependiente es relativamente débil.</p>
 </div>
 </div>
 <div id="regresión-con-variables-independientes-percepción-de-la-democracia-idh-y-legitimidad-estatal" class="section level1">
@@ -2454,6 +2506,9 @@ RMSE
 </tr>
 </tfoot>
 </table>
+<pre><code>## [1] -26.84029</code></pre>
+<pre><code>## [1] 321.1839</code></pre>
+<pre><code>## [1] -9.764808</code></pre>
 </div>
 <div id="año-2020-2" class="section level2">
 <h2>5.2. Año 2020</h2>
@@ -2570,6 +2625,28 @@ RMSE
 </tr>
 </tfoot>
 </table>
+<pre><code>## [1] -10.58559</code></pre>
+<pre><code>## [1] 368.8803</code></pre>
+<pre><code>## [1] -7.682766</code></pre>
+</div>
+<div id="análisis-de-los-resultados" class="section level2">
+<h2>5.3. Análisis de los resultados:</h2>
+<p>Para el modelo del 2019, la percepción de la corrupción va a
+disminuir en un 26.8% al aumentar el índice de la percepción de
+democracia, además, va a aumentar en un 321% al aumentar en un punto el
+IDH y va a disminuir en un 9.8% cuando la legitimidad estatal
+aumenta.</p>
+<p>Para el modelo del año 2020, la percepción de la corrupción va a
+disminuir en un 10.6% frente al aumento del índice de la percepción de
+democracia, asimismo, va a aumentar en un 369% al aumentar en un punto
+el IDH y va a disminuir en un 7.7% cuando la legitimidad estatal
+aumenta.</p>
+<p>En los modelos de los años 2019 y 2020, los predictores de
+legitimidad estatal e IDH se muestran muy significativos; es decir,
+estas variables causan gran impacto en la percepción de la corrupción.
+Sin embargo, se evidencia que la variable de percepción de democracia
+pierde significancia entre estos mismos años, por lo que no resulta muy
+significativa.</p>
 </div>
 </div>
 

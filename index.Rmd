@@ -6,6 +6,7 @@ date: "Noviembre, 2022"
 output: html_document
 ---
 
+
 ```{r include=FALSE}
 library(rio)
 library(dplyr)
@@ -27,11 +28,13 @@ El objetivo del presente trabajo es analizar los resultados de la percepción de
 
 # 1. Datos previos al análisis 
 
+
 + La variable dependiente escogida para este estudio es la "Percepción de corrupción" (PERCOR). 
 + Se ha eliminado la variable independiente "Saneamiento", esto debido a que la base de datos ofrecia muy pocos casos para el análisis. 
 
 
 # 2. Base de datos unificada
+
 
 ```{r echo=FALSE}
 LinkBDU = "https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/base_dataunificada.csv"
@@ -42,15 +45,17 @@ BDU%>%
 rmarkdown::paged_table()
 ```
 
+
 ```{r include=FALSE}
 colnames(BDU)[17] = "2019DES"
 colnames(BDU)[18] = "2020DES"
 colnames(BDU)[22] = "2019INFLACION"
 colnames(BDU)[23] = "2020INFLACION"
-BDU
 ```
 
+
 # 3. Regresión con variables independientes "Independencia de justicia", "Gobierno electo" y "Ausencia de corrupción"
+
 
 ## 3.1. Año 2019
 
@@ -70,6 +75,25 @@ modelsummary(REGREVA19, title = "Poisson",
              output = "kableExtra")
 ```
 
+```{r echo=FALSE}
+INDEPENDENCIA19=coef(REGREVA19)[['BDU$`2019INDEP`']] 
+V_INJUS19=exp(INDEPENDENCIA19) 
+(CambioINDEPENDENCIA19=100*(V_INJUS19)) 
+```
+
+```{r echo=FALSE}
+ELECTO19=coef(REGREVA19)[['BDU$`2019ELECT`']] 
+V_ELECT19=exp(ELECTO19) 
+(CambioELECTO19=100*(1-1/V_ELECT19))
+```
+
+```{r echo=FALSE}
+AUSENCIA19=coef(REGREVA19)[['BDU$`2019AUSCORR`']] 
+V_AUSCORR19=exp(AUSENCIA19) 
+(CambioAUSENCIA19=100*(V_AUSCORR19))
+```
+
+
 ## 3.2. Año 2020
 
 ```{r include=FALSE}
@@ -88,8 +112,37 @@ modelsummary(REGREVA20, title = "Poisson",
              output = "kableExtra")
 ```
 
+```{r echo=FALSE}
+INDEPENDENCIA20=coef(REGREVA20)[['BDU$`2020INDEP`']] 
+V_INJUS20=exp(INDEPENDENCIA20) 
+(CambioINDEPENDENCIA20=100*(V_INJUS20)) 
+```
+
+```{r echo=FALSE}
+ELECTO20=coef(REGREVA20)[['BDU$`2020ELECT`']] 
+V_ELECT20=exp(ELECTO20) 
+(CambioELECTO20=100*(1-1/V_ELECT20))
+```
+
+```{r echo=FALSE}
+AUSENCIA20=coef(REGREVA20)[['BDU$`2020AUSCORR`']] 
+V_AUSCORR20=exp(AUSENCIA20) 
+(CambioAUSENCIA20=100*(V_AUSCORR20))
+```
+
+
+## 3.3. Análisis de resultados:
+
+
+En el modelo del 2019, la percepción de la corrupción va a aumentar en un 115% al aumentar la independencia de justicia. También aumentará en 582% al aumentar el indice de ausencia de corrupción. Además, disminuirá en un 17.1% en respuesta a las composición decisiones y acciones del gobierno electo. 
+
+Para el modelo del año 2020, la percepción de la corrupción va a aumentar en un 110% al aumentar la independencia de justicia. También aumentará en 593% al aumentar el indice de ausencia de corrupción. Además, disminuirá en un 14.3% en respuesta a las composición decisiones y acciones del gobierno electo. 
+
+En los modelos de los años 2019 y 2020, los predictores de independencia de justicia y gobierno electo son poco significativos. En consecuencia, no se puede decir que estas variables impacten en la percepción de la corrupción, esto a pesar de que la variable gobierno electo gana cierto grado de significancia en 2020. Por otro lado, la predictora ausencia de corrupción no solo es significativa, sino que incrementa su valor de 2019 a 2020. Es interesante ver como la "ausencia de corrupción" esta generando un incremento en la "percepción de corrupción". Esto nos lleva a pensar que las mediciones no fueron hechas de manera adecuada (o se escogieron mal los parametros. 
+
 
 # 4. Regresión con variables independientes "Desempleo" e "Inflación"
+
 
 ## 4.1. Año 2019
 
@@ -109,10 +162,23 @@ modelsummary(REGREVS19, title = "Poisson",
              output = "kableExtra")
 ```
 
+```{r echo=FALSE}
+DESEMPLEO19=coef(REGREVS19)[['BDU$`2019DES`']] 
+V_DES19=exp(DESEMPLEO19) 
+(CambioDESEMPLEO19=100*(1-1/V_DES19)) 
+```
+
+```{r echo=FALSE}
+INFLACION19=coef(REGREVS19)[['BDU$`2019INFLACION`']] 
+V_INFLA19=exp(INFLACION19) 
+(CambioINFLACION19=100*(1-1/V_INFLA19))
+```
+
+
 ## 4.2. Año 2020
 
 ```{r include=FALSE}
-REGREVS20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020DES` + BDU$`2019INFLACION`, family = poisson(link = "log"))
+REGREVS20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020DES` + BDU$`2020INFLACION`, family = poisson(link = "log"))
 summary(REGREVS20)
 ```
 
@@ -127,7 +193,32 @@ modelsummary(REGREVS20, title = "Poisson",
              output = "kableExtra")
 ```
 
+```{r echo=FALSE}
+DESEMPLEO20=coef(REGREVS20)[['BDU$`2020DES`']] 
+V_DES20=exp(DESEMPLEO20) 
+(CambioDESEMPLEO20=100*(1-1/V_DES20)) 
+```
+
+```{r echo=FALSE}
+INFLACION20=coef(REGREVS20)[['BDU$`2020INFLACION`']] 
+V_INFLA20=exp(INFLACION20) 
+(CambioINFLACION19=100*(1-1/V_INFLA20))
+
+```
+
+
+## 4.3 Análisis de resultados:
+
+
+Para el modelo del 2019, la percepción de la corrupción va a disminuir en un 0.76% a medida que aumenta el desempleo y, siguiendo esa tendencia, disminuirá en un 0.63% al aumentar en un punto la inflación.
+
+Para el modelo del año 2020, la percepción de la corrupción va a disminuir en un 0.67% en respuesta al aumento del desempleo. Asi mismo, disminuirá en 0.25% cuando la inflación aumente en un punto. 
+
+En los modelos de los años 2019 y 2020, tanto el predictor de desempleo como el de inflación registran estimates significativos (visibilizado en los asteriscos). En ese sentido, es claro que ambas variables impactan sobre la percepción de la corrupción. Sin embargo, los resultados de 2020 son incluso más bajos que los de 2019. Esto implica que la emergencia sanitaria provocada por la propagación del COVID-19 no tuvo un efecto tan fuerte en estos problemas socioeconómicos como se tiende a pensar. Por ello, el impacto sobre la variable dependiente es relativamente débil. 
+
+
 # 5. Regresión con variables independientes "Percepción de la democracia", "IDH" y "Legitimidad estatal"
+
 
 ## 5.1. Año 2019
 
@@ -147,6 +238,25 @@ modelsummary(REGREVANA19, title = "Poisson",
              output = "kableExtra")
 ```
 
+```{r echo=FALSE}
+DEMOCRACIA19=coef(REGREVANA19)[['BDU$`2019PAR`']] 
+V_DEM19=exp(DEMOCRACIA19) 
+(CambioDEMOCRACIA19=100*(1-1/V_DEM19)) 
+```
+
+```{r echo=FALSE}
+IDH19=coef(REGREVANA19)[['BDU$`2019IDH`']] 
+V_IDH19=exp(IDH19) 
+(CambioIDH19=100*(V_IDH19))
+```
+
+```{r echo=FALSE}
+LEGITIMIDAD19=coef(REGREVANA19)[['BDU$`2019LEG`']] 
+V_LEG19=exp(LEGITIMIDAD19) 
+(CambioLEGITIMIDAD20=100*(1-1/V_LEG19))
+```
+
+
 ## 5.2. Año 2020
 
 ```{r include=FALSE}
@@ -164,5 +274,33 @@ modelsummary(REGREVANA20, title = "Poisson",
              stars = TRUE,
              output = "kableExtra")
 ```
+
+```{r echo=FALSE}
+DEMOCRACIA20=coef(REGREVANA20)[['BDU$`2020PAR`']] 
+V_DEM20=exp(DEMOCRACIA20) 
+(CambioDEMOCRACIA20=100*(1-1/V_DEM20)) 
+```
+
+```{r echo=FALSE}
+IDH20=coef(REGREVANA20)[['BDU$`2020IDH`']] 
+V_IDH20=exp(IDH20) 
+(CambioIDH20=100*(V_IDH20))
+```
+
+```{r echo=FALSE}
+LEGITIMIDAD20=coef(REGREVANA20)[['BDU$`2020LEG`']] 
+V_LEG20=exp(LEGITIMIDAD20) 
+(CambioLEGITIMIDAD20=100*(1-1/V_LEG20))
+```
+
+
+## 5.3. Análisis de los resultados: 
+
+
+Para el modelo del 2019, la percepción de la corrupción va a disminuir en un 26.8% al aumentar el índice de la percepción de democracia, además, va a aumentar en un 321% al aumentar en un punto el IDH y va a disminuir en un 9.8% cuando la legitimidad estatal aumenta.
+
+Para el modelo del año 2020, la percepción de la corrupción va a disminuir en un 10.6% frente al aumento del índice de la percepción de democracia, asimismo, va a aumentar en un 369% al aumentar en un punto el IDH y va a disminuir en un 7.7% cuando la legitimidad estatal aumenta.
+
+En los modelos de los años 2019 y 2020, los predictores de legitimidad estatal e IDH se muestran muy significativos; es decir, estas variables causan gran impacto en la percepción de la corrupción. Sin embargo, se evidencia que la variable de percepción de democracia pierde significancia entre estos mismos años, por lo que no resulta muy significativa.
 
 
