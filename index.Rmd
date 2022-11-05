@@ -3,7 +3,10 @@ title: "La percepción de corrupción a nivel global entre 2019 y 2020"
 subtitle: 'Curso: POL304 - Estadística para el análisis político 2'
 author: "Santiago Maldonado Vizcarra, Andrea Salas y Ana Goñi"
 date: "Noviembre, 2022"
-output: html_document
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
 
 
