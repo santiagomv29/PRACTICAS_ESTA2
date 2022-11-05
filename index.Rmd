@@ -3,7 +3,10 @@ title: "La percepción de corrupción a nivel global entre 2019 y 2020"
 subtitle: 'Curso: POL304 - Estadística para el análisis político 2'
 author: "Santiago Maldonado Vizcarra, Andrea Salas y Ana Goñi"
 date: "Noviembre, 2022"
-output: html_document
+output:
+prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
 
 
@@ -36,15 +39,15 @@ El objetivo del presente trabajo es analizar los resultados de la percepción de
 # 2. Base de datos unificada
 
 
-```{r echo=FALSE}
+```{r include=FALSE}
 LinkBDU = "https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/base_dataunificada.csv"
 library(rio)
 BDU = import(LinkBDU)
-library(magrittr)
-BDU%>%
-rmarkdown::paged_table()
 ```
 
+```{r echo=FALSE}
+datatable(BDU, filter = "top")
+```
 
 ```{r include=FALSE}
 colnames(BDU)[17] = "2019DES"
@@ -217,7 +220,7 @@ Para el modelo del año 2020, la percepción de la corrupción va a disminuir en
 En los modelos de los años 2019 y 2020, tanto el predictor de desempleo como el de inflación registran estimates significativos (visibilizado en los asteriscos). En ese sentido, es claro que ambas variables impactan sobre la percepción de la corrupción. Sin embargo, los resultados de 2020 son incluso más bajos que los de 2019. Esto implica que la emergencia sanitaria provocada por la propagación del COVID-19 no tuvo un efecto tan fuerte en estos problemas socioeconómicos como se tiende a pensar. Por ello, el impacto sobre la variable dependiente es relativamente débil. 
 
 
-# 5. Regresión con variables independientes "Percepción de la democracia", "IDH" y "Legitimidad estatal"
+# 5. Regresión con variables independientes "Indice de democracia", "IDH" y "Legitimidad estatal"
 
 
 ## 5.1. Año 2019
@@ -297,10 +300,10 @@ V_LEG20=exp(LEGITIMIDAD20)
 ## 5.3. Análisis de los resultados: 
 
 
-Para el modelo del 2019, la percepción de la corrupción va a disminuir en un 26.8% al aumentar el índice de la percepción de democracia, además, va a aumentar en un 321% al aumentar en un punto el IDH y va a disminuir en un 9.8% cuando la legitimidad estatal aumenta.
+Para el modelo del 2019, la percepción de la corrupción va a disminuir en un 26.8% al aumentar el índice  de democracia, además, va a aumentar en un 321% al aumentar en un punto el IDH y va a disminuir en un 9.8% cuando la legitimidad estatal aumenta.
 
-Para el modelo del año 2020, la percepción de la corrupción va a disminuir en un 10.6% frente al aumento del índice de la percepción de democracia, asimismo, va a aumentar en un 369% al aumentar en un punto el IDH y va a disminuir en un 7.7% cuando la legitimidad estatal aumenta.
+Para el modelo del año 2020, la percepción de la corrupción va a disminuir en un 10.6% frente al aumento del índice de democracia, asimismo, va a aumentar en un 369% al aumentar en un punto el IDH y va a disminuir en un 7.7% cuando la legitimidad estatal aumenta.
 
-En los modelos de los años 2019 y 2020, los predictores de legitimidad estatal e IDH se muestran muy significativos; es decir, estas variables causan gran impacto en la percepción de la corrupción. Sin embargo, se evidencia que la variable de percepción de democracia pierde significancia entre estos mismos años, por lo que no resulta muy significativa.
+En los modelos de los años 2019 y 2020, los predictores de legitimidad estatal e IDH se muestran muy significativos; es decir, estas variables causan gran impacto en la percepción de la corrupción. Sin embargo, se evidencia que la variable de índice de democracia pierde significancia entre estos mismos años, por lo que no resulta muy significativa. Ello indica que el indice de democracia, respecto a paises en los que hay elecciones y competitividad política, no impacta realmente en la percepción de la corrupción de los ciudadanos.
 
 
