@@ -56,6 +56,11 @@ colnames(BDU)[22] = "2019INFLACION"
 colnames(BDU)[23] = "2020INFLACION"
 ```
 
+```{r echo=FALSE}
+datatable(BDU, filter = "top")
+```
+
+
 
 # 3. Regresión con variables independientes "Independencia de justicia", "Gobierno electo" y "Ausencia de corrupción"
 
