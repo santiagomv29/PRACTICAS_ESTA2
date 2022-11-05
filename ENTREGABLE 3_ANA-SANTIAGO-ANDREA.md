@@ -1,4 +1,4 @@
-# Entregable 3 – 7 de octubre - Estadística 2
+# Entregable 3 – 5 de noviembre - Estadística 2
 
 ## Miembros del grupo:
 
