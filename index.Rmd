@@ -42,6 +42,13 @@ BDU%>%
 rmarkdown::paged_table()
 ```
 
+```{r include=FALSE}
+colnames(BDU)[17] = "2019DES"
+colnames(BDU)[18] = "2020DES"
+colnames(BDU)[22] = "2019INFLACION"
+colnames(BDU)[23] = "2020INFLACION"
+BDU
+```
 
 # 3. Regresión con variables independientes "Independencia de justicia", "Gobierno electo" y "Ausencia de corrupción"
 
@@ -87,8 +94,8 @@ modelsummary(REGREVA20, title = "Poisson",
 ## 4.1. Año 2019
 
 ```{r include=FALSE}
-REGREVS19 = glm(BDU$PERCOR_2019.y.x ~ BDU$DES2019 + BDU$INFLACION_2019,family = poisson(link = "log"))
-summary(REGREVS19)#CORREGIR
+REGREVS19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019DES` + BDU$`2019INFLACION`,family = poisson(link = "log"))
+summary(REGREVS19)
 ```
 
 ```{r echo=FALSE}
@@ -97,7 +104,7 @@ equatiomatic::extract_eq(REGREVS19, use_coefs = TRUE)
 
 ```{r echo=FALSE}
 model=list('PERCOR.y.x'=BDU)
-modelsummary(REGREVS19, title = "Poisson",
+modelsummary(REGREVS19, title = "Poisson", 
              stars = TRUE,
              output = "kableExtra")
 ```
@@ -105,7 +112,7 @@ modelsummary(REGREVS19, title = "Poisson",
 ## 4.2. Año 2020
 
 ```{r include=FALSE}
-REGREVS20 = glm(BDU$PERCOR_2020.y.x ~ BDU$DES2020 + BDU$INFLACION_2020,family = poisson(link = "log"))
+REGREVS20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020DES` + BDU$`2019INFLACION`, family = poisson(link = "log"))
 summary(REGREVS20)
 ```
 
@@ -115,7 +122,8 @@ equatiomatic::extract_eq(REGREVS20, use_coefs = TRUE)
 
 ```{r echo=FALSE}
 model=list('PERCOR.y.x'=BDU)
-modelsummary(REGREVS20, title = "Poisson", stars = TRUE,
+modelsummary(REGREVS20, title = "Poisson", 
+             stars = TRUE,
              output = "kableExtra")
 ```
 
@@ -134,7 +142,7 @@ equatiomatic::extract_eq(REGREVANA19, use_coefs = TRUE)
 
 ```{r echo=FALSE}
 model=list('PERCOR.y.x'=BDU)
-modelsummary(REGREVANA19, title = "Poisson",
+modelsummary(REGREVANA19, title = "Poisson", 
              stars = TRUE,
              output = "kableExtra")
 ```

@@ -2136,8 +2136,8 @@ RMSE
 <h2>4.1. Año 2019</h2>
 <p><span class="math display">\[
 \log ({ \widehat{E( \operatorname{BDU} )} })  = 3.89 -
-0.01(\operatorname{BDU\$DES2019}) -
-0.01(\operatorname{BDU\$INFLACION\_2019})
+0.01(\operatorname{BDU\$`2019DES`}) -
+0.01(\operatorname{BDU\$`2019INFLACION`})
 \]</span></p>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
 <caption>
@@ -2170,13 +2170,22 @@ Model 1
 </tr>
 <tr>
 <td style="text-align:left;">
-BDU<span class="math inline">\(DES2019 &lt;/td&gt;  &lt;td
-style=&quot;text-align:center;&quot;&gt; -0.008**
-&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td
-style=&quot;text-align:left;&quot;&gt; &lt;/td&gt;  &lt;td
-style=&quot;text-align:center;&quot;&gt; (0.003)
-&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td
-style=&quot;text-align:left;&quot;&gt; BDU\)</span>INFLACION_2019
+BDU$2019DES
+</td>
+<td style="text-align:center;">
+-0.008**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.003)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BDU$2019INFLACION
 </td>
 <td style="text-align:center;">
 -0.006***
@@ -2227,9 +2236,9 @@ RMSE
 <div id="año-2020-1" class="section level2">
 <h2>4.2. Año 2020</h2>
 <p><span class="math display">\[
-\log ({ \widehat{E( \operatorname{BDU} )} })  = 3.89 -
-0.01(\operatorname{BDU\$DES2020}) +
-0(\operatorname{BDU\$INFLACION\_2020})
+\log ({ \widehat{E( \operatorname{BDU} )} })  = 3.9 -
+0.01(\operatorname{BDU\$`2020DES`}) -
+0.01(\operatorname{BDU\$`2019INFLACION`})
 \]</span></p>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
 <caption>
@@ -2250,7 +2259,7 @@ Model 1
 (Intercept)
 </td>
 <td style="text-align:center;">
-3.890***
+3.898***
 </td>
 </tr>
 <tr>
@@ -2262,23 +2271,32 @@ Model 1
 </tr>
 <tr>
 <td style="text-align:left;">
-BDU<span class="math inline">\(DES2020 &lt;/td&gt;  &lt;td
-style=&quot;text-align:center;&quot;&gt; -0.007**
-&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td
-style=&quot;text-align:left;&quot;&gt; &lt;/td&gt;  &lt;td
-style=&quot;text-align:center;&quot;&gt; (0.002)
-&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td
-style=&quot;text-align:left;&quot;&gt; BDU\)</span>INFLACION_2020
+BDU$2020DES
 </td>
 <td style="text-align:center;">
--0.003***
+-0.006**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.002)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BDU$2019INFLACION
+</td>
+<td style="text-align:center;">
+-0.006***
 </td>
 </tr>
 <tr>
 <td style="text-align:left;box-shadow: 0px 1px">
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.0005)
+(0.001)
 </td>
 </tr>
 <tr>
@@ -2294,7 +2312,7 @@ Num.Obs.
 F
 </td>
 <td style="text-align:center;">
-19.655
+23.834
 </td>
 </tr>
 <tr>
@@ -2302,7 +2320,7 @@ F
 RMSE
 </td>
 <td style="text-align:center;">
-18.52
+18.37
 </td>
 </tr>
 </tbody>
