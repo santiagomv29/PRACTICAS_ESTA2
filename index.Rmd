@@ -5,7 +5,7 @@ author: "Santiago Maldonado Vizcarra, Andrea Salas y Ana Goñi"
 date: "Noviembre, 2022"
 output:
  prettydoc::html_pretty:
-  theme: cayman
+  theme: readthedown
   highlight: github
 ---
 
