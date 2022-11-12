@@ -5,7 +5,7 @@ author: "Santiago Maldonado Vizcarra, Andrea Salas y Ana Goñi"
 date: "Noviembre, 2022"
 output:
  prettydoc::html_pretty:
-  theme: readthedown
+  theme: cayman
   highlight: github
 ---
  
@@ -15,11 +15,12 @@ library(rio)
 library(dplyr)
 library(ggplot2)
 library(cowplot)
-library(knitr)
 library(kableExtra)
+library(equatiomatic)
+library(tables)
+library(rmarkdown)
 library(reshape)
 library(DT)
-library(equatiomatic)
 library(modelsummary)
 library(factoextra)
 library(cluster)
@@ -40,7 +41,7 @@ El objetivo del presente trabajo es analizar los resultados de la percepción de
 
 
 ```{r include=FALSE}
-LinkBDU = "https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/base_dataunificada.csv"
+LinkBDU = "https://github.com/santiagomv29/PRACTICAS_ESTA2/raw/main/dataunificada.csv"
 library(rio)
 BDU = import(LinkBDU)
 ```
@@ -49,21 +50,13 @@ BDU = import(LinkBDU)
 datatable(BDU, filter = "top")
 ```
 
-```{r include=FALSE}
-colnames(BDU)[17] = "2019DES"
-colnames(BDU)[18] = "2020DES"
-colnames(BDU)[22] = "2019INFLACION"
-colnames(BDU)[23] = "2020INFLACION"
-```
-
-
 # 3. Regresión con variables independientes "Independencia de justicia", "Gobierno electo" y "Ausencia de corrupción"
 
 
 ## 3.1. Año 2019
 
 ```{r include=FALSE}
-REGREVA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR`,family = poisson(link = "log"))
+REGREVA19 = glm(BDU$`2019PERCOR` ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR`,family = poisson(link = "log")) 
 summary(REGREVA19)
 ```
 
@@ -100,7 +93,7 @@ V_AUSCORR19=exp(AUSENCIA19)
 ## 3.2. Año 2020
 
 ```{r include=FALSE}
-REGREVA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`,family = poisson(link = "log"))
+REGREVA20 = glm(BDU$`2020PERCOR` ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`,family = poisson(link = "log"))
 summary(REGREVA20)
 ```
 
@@ -150,7 +143,7 @@ En los modelos de los años 2019 y 2020, los predictores de independencia de jus
 ## 4.1. Año 2019
 
 ```{r include=FALSE}
-REGREVS19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019DES` + BDU$`2019INFLACION`,family = poisson(link = "log"))
+REGREVS19 = glm(BDU$`2019PERCOR` ~ BDU$`2019DES` + BDU$`2019INFLACION`,family = poisson(link = "log"))
 summary(REGREVS19)
 ```
 
@@ -181,7 +174,7 @@ V_INFLA19=exp(INFLACION19)
 ## 4.2. Año 2020
 
 ```{r include=FALSE}
-REGREVS20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020DES` + BDU$`2020INFLACION`, family = poisson(link = "log"))
+REGREVS20 = glm(BDU$`2020PERCOR` ~ BDU$`2020DES` + BDU$`2020INFLACION`, family = poisson(link = "log"))
 summary(REGREVS20)
 ```
 
@@ -226,7 +219,7 @@ En los modelos de los años 2019 y 2020, tanto el predictor de desempleo como el
 ## 5.1. Año 2019
 
 ```{r include=FALSE}
-REGREVANA19 = glm(BDU$PERCOR_2019.y.x ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`,family = poisson(link = "log"))
+REGREVANA19 = glm(BDU$`2019PERCOR` ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`,family = poisson(link = "log"))
 summary(REGREVANA19)
 ```
 
@@ -263,7 +256,7 @@ V_LEG19=exp(LEGITIMIDAD19)
 ## 5.2. Año 2020
 
 ```{r include=FALSE}
-REGREVANA20 = glm(BDU$PERCOR_2020.y.x ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`,family = poisson(link = "log"))
+REGREVANA20 = glm(BDU$`2020PERCOR` ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`,family = poisson(link = "log"))
 summary(REGREVANA20)
 ```
 
