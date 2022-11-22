@@ -134,7 +134,7 @@ equatiomatic::extract_eq(REGREVA19LM, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2019PERCOR'=BDU)
+model1=list('2019PERCOR'=BDU)
 modelsummary(REGREVA19LM, title = "Modelo lineal",
              stars = TRUE,
              output = "kableExtra")
@@ -152,7 +152,7 @@ equatiomatic::extract_eq(REGREVA19, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2019PERCOR'=BDU)
+model2=list('2019PERCOR'=BDU)
 modelsummary(REGREVA19, title = "Poisson",
              stars = TRUE,
              output = "kableExtra")
@@ -193,7 +193,7 @@ equatiomatic::extract_eq(REGREVA20LM, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2020PERCOR'=BDU)
+model3=list('2020PERCOR'=BDU)
 modelsummary(REGREVA20LM, title = "Modelo Lineal",
              stars = TRUE,
              output = "kableExtra")
@@ -211,7 +211,7 @@ equatiomatic::extract_eq(REGREVA20, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2020PERCOR'=BDU)
+model4=list('2020PERCOR'=BDU)
 modelsummary(REGREVA20, title = "Poisson",
              stars = TRUE,
              output = "kableExtra")
@@ -263,7 +263,7 @@ equatiomatic::extract_eq(REGREVS19LM, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2019PERCOR'=BDU)
+model5=list('2019PERCOR'=BDU)
 modelsummary(REGREVS19LM, title = "Modelo Lineal", 
              stars = TRUE,
              output = "kableExtra")
@@ -281,7 +281,7 @@ equatiomatic::extract_eq(REGREVS19, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2019PERCOR'=BDU)
+model6=list('2019PERCOR'=BDU)
 modelsummary(REGREVS19, title = "Poisson", 
              stars = TRUE,
              output = "kableExtra")
@@ -316,7 +316,7 @@ equatiomatic::extract_eq(REGREVS20LM, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2020PERCOR'=BDU)
+model7=list('2020PERCOR'=BDU)
 modelsummary(REGREVS20LM, title = "Modelo Lineal", 
              stars = TRUE,
              output = "kableExtra")
@@ -334,7 +334,7 @@ equatiomatic::extract_eq(REGREVS20, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2020PERCOR'=BDU)
+model8=list('2020PERCOR'=BDU)
 modelsummary(REGREVS20, title = "Poisson", 
              stars = TRUE,
              output = "kableExtra")
@@ -383,7 +383,7 @@ equatiomatic::extract_eq(REGREVANA19LM, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2019PERCOR'=BDU)
+model9=list('2019PERCOR'=BDU)
 modelsummary(REGREVANA19LM, title = "Modelo Lineal", 
              stars = TRUE,
              output = "kableExtra")
@@ -401,7 +401,7 @@ equatiomatic::extract_eq(REGREVANA19, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2019PERCOR'=BDU)
+model10=list('2019PERCOR'=BDU)
 modelsummary(REGREVANA19, title = "Poisson", 
              stars = TRUE,
              output = "kableExtra")
@@ -442,7 +442,7 @@ equatiomatic::extract_eq(REGREVANA20LM, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('2020PERCOR'=BDU)
+model11=list('2020PERCOR'=BDU)
 modelsummary(REGREVANA20LM, title = "Modelo Lineal", 
              stars = TRUE,
              output = "kableExtra")
@@ -460,7 +460,7 @@ equatiomatic::extract_eq(REGREVANA20, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('PERCOR.y.x'=BDU)
+model12=list('2020PERCOR'=BDU)
 modelsummary(REGREVANA20, title = "Poisson",
              stars = TRUE,
              output = "kableExtra")
