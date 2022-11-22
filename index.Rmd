@@ -121,6 +121,27 @@ mapa4
 
 ## 4.1. Año 2019:
 
+
+## 4.1.1. Modelo Lineal:
+
+```{r include=FALSE}
+REGREVA19LM = lm(BDU$`2019PERCOR` ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR`) 
+summary(REGREVA19LM) 
+```
+
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVA19LM, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('2019PERCOR'=BDU)
+modelsummary(REGREVA19LM, title = "Modelo lineal",
+             stars = TRUE,
+             output = "kableExtra")
+```
+
+## 4.1.2. Modelo Poisson: 
+
 ```{r include=FALSE}
 REGREVA19 = glm(BDU$`2019PERCOR` ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR`,family = poisson(link = "log")) 
 summary(REGREVA19)
@@ -131,11 +152,13 @@ equatiomatic::extract_eq(REGREVA19, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('PERCOR.y.x'=BDU)
+model=list('2019PERCOR'=BDU)
 modelsummary(REGREVA19, title = "Poisson",
              stars = TRUE,
              output = "kableExtra")
 ```
+
+## 4.1.2.1. Coeficientes exponenciados: 
 
 ```{r echo=FALSE}
 INDEPENDENCIA19=coef(REGREVA19)[['BDU$`2019INDEP`']] 
@@ -158,6 +181,26 @@ V_AUSCORR19=exp(AUSENCIA19)
 
 ## 4.2. Año 2020:
 
+## 4.2.1. Modelo Lineal:
+
+```{r include=FALSE}
+REGREVA20LM = lm(BDU$`2020PERCOR` ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`) 
+summary(REGREVA19LM) 
+```
+
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVA20LM, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('2020PERCOR'=BDU)
+modelsummary(REGREVA20LM, title = "Modelo Lineal",
+             stars = TRUE,
+             output = "kableExtra")
+```
+
+## 4.2.2. Modelo Poisson:
+
 ```{r include=FALSE}
 REGREVA20 = glm(BDU$`2020PERCOR` ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`,family = poisson(link = "log"))
 summary(REGREVA20)
@@ -168,7 +211,7 @@ equatiomatic::extract_eq(REGREVA20, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('PERCOR.y.x'=BDU)
+model=list('2020PERCOR'=BDU)
 modelsummary(REGREVA20, title = "Poisson",
              stars = TRUE,
              output = "kableExtra")
@@ -208,6 +251,26 @@ En los modelos de los años 2019 y 2020, los predictores de independencia de jus
 
 ## 5.1. Año 2019
 
+## 5.1.1. Modelo Lineal:
+
+```{r include=FALSE}
+REGREVS19LM = lm(BDU$`2019PERCOR` ~ BDU$`2019DES` + BDU$`2019INFLACION`)
+summary(REGREVS19LM)
+```
+
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVS19LM, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('2019PERCOR'=BDU)
+modelsummary(REGREVS19LM, title = "Modelo Lineal", 
+             stars = TRUE,
+             output = "kableExtra")
+```
+
+## 5.1.2. Modelo Poisson:
+
 ```{r include=FALSE}
 REGREVS19 = glm(BDU$`2019PERCOR` ~ BDU$`2019DES` + BDU$`2019INFLACION`,family = poisson(link = "log"))
 summary(REGREVS19)
@@ -218,11 +281,13 @@ equatiomatic::extract_eq(REGREVS19, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('PERCOR.y.x'=BDU)
+model=list('2019PERCOR'=BDU)
 modelsummary(REGREVS19, title = "Poisson", 
              stars = TRUE,
              output = "kableExtra")
 ```
+
+## 5.1.2.1. Coeficientes exponenciados: 
 
 ```{r echo=FALSE}
 DESEMPLEO19=coef(REGREVS19)[['BDU$`2019DES`']] 
@@ -239,6 +304,26 @@ V_INFLA19=exp(INFLACION19)
 
 ## 5.2. Año 2020
 
+## 5.2.1. Modelo Lineal:
+
+```{r include=FALSE}
+REGREVS20LM = lm(BDU$`2020PERCOR` ~ BDU$`2020DES` + BDU$`2020INFLACION`)
+summary(REGREVS19LM)
+```
+
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVS20LM, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('2020PERCOR'=BDU)
+modelsummary(REGREVS20LM, title = "Modelo Lineal", 
+             stars = TRUE,
+             output = "kableExtra")
+```
+
+## 5.2.2. Modelo Poisson:
+
 ```{r include=FALSE}
 REGREVS20 = glm(BDU$`2020PERCOR` ~ BDU$`2020DES` + BDU$`2020INFLACION`, family = poisson(link = "log"))
 summary(REGREVS20)
@@ -249,11 +334,13 @@ equatiomatic::extract_eq(REGREVS20, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('PERCOR.y.x'=BDU)
+model=list('2020PERCOR'=BDU)
 modelsummary(REGREVS20, title = "Poisson", 
              stars = TRUE,
              output = "kableExtra")
 ```
+
+## 5.2.2.1. Coeficientes exponenciados: 
 
 ```{r echo=FALSE}
 DESEMPLEO20=coef(REGREVS20)[['BDU$`2020DES`']] 
@@ -284,6 +371,26 @@ En los modelos de los años 2019 y 2020, tanto el predictor de desempleo como el
 
 ## 6.1. Año 2019:
 
+## 6.1.1. Modelo Lineal:
+
+```{r include=FALSE}
+REGREVANA19LM = lm(BDU$`2019PERCOR` ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`)
+summary(REGREVANA19LM)
+```
+
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVANA19LM, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('2019PERCOR'=BDU)
+modelsummary(REGREVANA19LM, title = "Modelo Lineal", 
+             stars = TRUE,
+             output = "kableExtra")
+```
+
+## 6.1.2. Modelo Poisson: 
+
 ```{r include=FALSE}
 REGREVANA19 = glm(BDU$`2019PERCOR` ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`,family = poisson(link = "log"))
 summary(REGREVANA19)
@@ -294,11 +401,13 @@ equatiomatic::extract_eq(REGREVANA19, use_coefs = TRUE)
 ```
 
 ```{r echo=FALSE}
-model=list('PERCOR.y.x'=BDU)
+model=list('2019PERCOR'=BDU)
 modelsummary(REGREVANA19, title = "Poisson", 
              stars = TRUE,
              output = "kableExtra")
 ```
+
+## 6.1.2.1. Coeficientes exponenciados: 
 
 ```{r echo=FALSE}
 DEMOCRACIA19=coef(REGREVANA19)[['BDU$`2019PAR`']] 
@@ -321,6 +430,26 @@ V_LEG19=exp(LEGITIMIDAD19)
 
 ## 6.2. Año 2020:
 
+## 6.2.1. Modelo Lineal:
+
+```{r include=FALSE}
+REGREVANA20LM = lm(BDU$`2020PERCOR` ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`)
+summary(REGREVANA19)
+```
+
+```{r echo=FALSE}
+equatiomatic::extract_eq(REGREVANA20LM, use_coefs = TRUE)
+```
+
+```{r echo=FALSE}
+model=list('2020PERCOR'=BDU)
+modelsummary(REGREVANA20LM, title = "Modelo Lineal", 
+             stars = TRUE,
+             output = "kableExtra")
+```
+
+## 6.2.2. Modelo Poisson: 
+
 ```{r include=FALSE}
 REGREVANA20 = glm(BDU$`2020PERCOR` ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`,family = poisson(link = "log"))
 summary(REGREVANA20)
@@ -336,6 +465,8 @@ modelsummary(REGREVANA20, title = "Poisson",
              stars = TRUE,
              output = "kableExtra")
 ```
+
+## 6.2.2.1. Coeficientes exponenciados: 
 
 ```{r echo=FALSE}
 DEMOCRACIA20=coef(REGREVANA20)[['BDU$`2020PAR`']] 
