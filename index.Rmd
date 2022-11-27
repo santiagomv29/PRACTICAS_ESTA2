@@ -5,7 +5,7 @@ author: "Santiago Maldonado Vizcarra, Andrea Salas y Ana Goñi"
 date: "Noviembre, 2022"
 output:
  prettydoc::html_pretty:
-  theme: cayman
+  theme: leonids
   highlight: github
 ---
  
@@ -24,6 +24,8 @@ library(DT)
 library(modelsummary)
 library(factoextra)
 library(cluster)
+library(tidyverse)
+library(hrbrthemes)
 ```
 
 
@@ -47,17 +49,34 @@ BDU = import(LinkBDU)
 ```
 
 ```{r echo=FALSE}
-datatable(BDU, filter = "top")
+datatable(BDU)
 ```
+
+
+## 2.1. Presentación de la variable dependiente - Año 2019:
+
+
+```{r echo=FALSE}
+g2019 = barplot(BDU$`2019PERCOR`,main="Percepción de corrupción - Año 2019",ylab="Puntaje",xlab= NULL,las=2, ylim= c(0,100),width = 1, space = 1, names.arg = BDU$COUNTRY, col = "skyblue", border = "black") 
+```
+
+
+## 2.2. Presentación de la variable dependiente - Año 2020: 
+
+
+```{r echo=FALSE}
+g2020 = barplot(BDU$`2020PERCOR`,main="Percepción de corrupción - Año 2019",ylab="Puntaje",xlab= NULL,las=2, ylim= c(0,100), width = 1, space = 1, names.arg = BDU$COUNTRY, col = "lightgreen", border = "black")
+```
+
 
 # 3. Mapas de calor con variable dependiente: 
 
 
-```{r include=FALSE}
-library(sp)
+```{r include=FALSE} 
+library(sp) 
 library(rgdal)
 library(ggplot2)
-mapDIS=sf::read_sf("fwdshapefile/world-administrative-boundaries.shp")
+mapDIS=sf::read_sf("C:/Users/Santiago/OneDrive/Documentos/GitHub/PRACTICAS_ESTA2/fwdshapefile/world-administrative-boundaries.shp") 
 
 ```
 
@@ -66,7 +85,7 @@ MAP = merge(mapDIS,BDU, by.x = "iso3", by.y = "ISO", all.x = T)
 ```
 
 
-## 3.1. Mapa de calor 2019:
+## 3.1. Mapa de calor - Año 2019:
 
 ```{r echo=FALSE}
 
@@ -87,11 +106,12 @@ theme(
 plot.title = element_text(color="black", size=15, face="bold"),
 plot.caption = element_text(color = "black", size=10))
 
-mapa3
+mapa3 
 ```
 
 
-## 3.2. Mapa de calor 2020:
+## 3.2. Mapa de calor - Año 2020:
+
 
 ```{r echo=FALSE}
 
@@ -116,382 +136,515 @@ mapa4
 ```
 
 
-# 4. Regresión con variables independientes "Independencia de justicia", "Gobierno electo" y "Ausencia de corrupción":
+# 4. Conglomeración de variables independientes - Año 2019: 
+
+## 4.1. Preparación de datos para la conglomeración - Año 2019: 
 
 
-## 4.1. Año 2019:
-
-
-## 4.1.1. Modelo Lineal:
+```{r echo=FALSE}
+BDU2=BDU[,-c(4,6,8,10,12,13,14,16,18,20)]
+datatable(BDU2)
+```
 
 ```{r include=FALSE}
-REGREVA19LM = lm(BDU$`2019PERCOR` ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR`) 
-summary(REGREVA19LM) 
+boxplot(BDU2[,c(3:10)],horizontal = F,las=2,cex.axis =0.5)
+```
+
+```{r include=FALSE}
+library(BBmisc)
+boxplot(normalize(BDU2[,c(3:10)],method='range',range=c(0,10))) #CAMBIAR ORIENTACIÓN DE NOMBRES
+```
+
+```{r include=FALSE}
+library(BBmisc)
+boxplot(normalize(BDU2[,c(3:10)],method='standardize'))
+```
+
+```{r include=FALSE}
+BDU2[,c(3:10)]=normalize(BDU2[,c(3:10)],method='standardize') #preguntar si nos quedamos con este o cambiamos por el de range
+```
+
+```{r include=FALSE}
+cor(BDU2[,c(3:10)])
+```
+
+
+```{r include=FALSE}
+clusBDU2=BDU2[,c(3:10)] #AQUÍ INICIA LA TÉCNICA PAM
+row.names(clusBDU2)=BDU2$COUNTRY
+```
+
+```{r include=FALSE}
+library(cluster)
+g.dist = daisy(clusBDU2, metric="gower")
+```
+
+```{r include=FALSE}
+library(factoextra)
+fviz_nbclust(clusBDU2, pam,diss=g.dist,method ="gap_stat",k.max =10,verbose =F)
+```
+
+```{r include=FALSE}
+library(dplyr)
+library(kableExtra) #rango entre 3 y 5 (elegir 5 por que es el más cercano a 9) /VOLVER FACTOR EL VECTOR DE CLUSTER
+set.seed(123)
+res.pam=pam(g.dist,5,cluster.only=F) #el número refleja la cantidad de clusters
+#nueva columna
+clusBDU2$pam=res.pam$cluster
+# ver
+head(clusBDU2,15)%>%kbl()%>%kable_styling()
+
+```
+
+```{r include=FALSE}
+fviz_silhouette(res.pam,print.summary = F) #barras para abajo están mal clusterizadas
+```
+
+
+## 4.2. Conglomeración con técnica aglomerativa AGNES - Año 2019:
+
+
+```{r echo=FALSE}
+fviz_nbclust(clusBDU2, hcut,diss=g.dist,method = "gap_stat",k.max = 10,verbose = F,hc_func = "agnes")
 ```
 
 ```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVA19LM, use_coefs = TRUE)
+set.seed(123)
+library(factoextra)
+res.agnes<- hcut(g.dist, k =2,hc_func='agnes',hc_method ="ward.D")
+clusBDU2$agnes=res.agnes$cluster
+# ver
+head(clusBDU2,15)%>%kbl()%>%kable_styling()
+```
+
+```{r include=FALSE}
+fviz_dend(res.agnes, cex = 0.7, horiz = T,main = "")
 ```
 
 ```{r echo=FALSE}
-model1=list('2019PERCOR'=BDU)
-modelsummary(REGREVA19LM, title = "Modelo lineal",
-             stars = TRUE,
+fviz_silhouette(res.agnes,print.summary = F)
+```
+
+
+```{r include=FALSE}
+fviz_nbclust(clusBDU2, hcut,diss=g.dist,method ="gap_stat",k.max = 10,verbose = F,hc_func ="diana") #AQUÍ INICIA DIANA
+```
+
+```{r include=FALSE}
+set.seed(123)
+res.diana <- hcut(g.dist, k = 3,hc_func='diana') #se elige 3 por ser el número más cercano a 1 
+clusBDU2$diana=res.diana$cluster
+# veamos
+head(clusBDU2,15)%>%kbl%>%kable_styling()
+```
+
+```{r include=FALSE}
+fviz_dend(res.diana, cex =0.7, horiz = T, main ="")
+```
+
+```{r include=FALSE}
+fviz_silhouette(res.diana,print.summary = F)
+```
+
+
+# 5. Conglomeración de variables independientes - Año 2020: 
+
+
+## 5.1. Preparación de datos para la conglomeración - Año 2020: 
+
+
+```{r echo=FALSE}
+BDU3=BDU[,-c(3,5,7,9,11,13,14,15,17,19)]
+datatable(BDU3) 
+```
+
+```{r include=FALSE}
+boxplot(BDU3[,c(3:10)],horizontal = F,las=2,cex.axis =0.5)
+```
+
+```{r include=FALSE}
+boxplot(normalize(BDU3[,c(3:10)],method='range',range=c(0,10))) #CAMBIAR ORIENTACIÓN DE NOMBRES
+```
+
+```{r include=FALSE}
+library(BBmisc)
+boxplot(normalize(BDU3[,c(3:10)],method='standardize'))
+```
+
+```{r include=FALSE}
+BDU3[,c(3:10)]=normalize(BDU3[,c(3:10)],method='standardize') #preguntar si nos quedamos con este o cambiamos por el de range
+```
+
+```{r include=FALSE}
+cor(BDU3[,c(3:10)])
+```
+
+
+```{r include=FALSE}
+clusBDU3=BDU3[,c(3:10)] #AQUÍ INICIA PAM
+row.names(clusBDU3)=BDU3$COUNTRY
+```
+
+```{r include=FALSE}
+library(cluster)
+g.dist2 = daisy(clusBDU3, metric="gower")
+```
+
+```{r include=FALSE}
+library(factoextra)
+fviz_nbclust(clusBDU3, pam,diss=g.dist2,method ="gap_stat",k.max =10,verbose =F)
+```
+
+```{r include=FALSE}
+library(dplyr)
+library(kableExtra)
+set.seed(123)
+res.pam2=pam(g.dist2,5,cluster.only=F) #el número refleja la cantidad de clusters (se elige 5 por que es el más cercano a 9)
+#nueva columna
+clusBDU3$pam=res.pam2$cluster
+# ver
+head(clusBDU3,15)%>%kbl()%>%kable_styling()
+
+```
+
+## 5.2. Conglomeración con técnica aglomerativa AGNES - Año 2020:
+
+
+```{r echo=FALSE}
+fviz_nbclust(clusBDU3, hcut,diss=g.dist2,method = "gap_stat",k.max = 10,verbose = F,hc_func = "agnes")
+```
+
+```{r echo=FALSE}
+set.seed(123)
+library(factoextra)
+res.agnes2<- hcut(g.dist2, k =3,hc_func='agnes',hc_method ="ward.D")
+clusBDU3$agnes=res.agnes2$cluster
+# ver
+head(clusBDU3,15)%>%kbl()%>%kable_styling()
+```
+
+```{r include=FALSE}
+fviz_dend(res.agnes2, cex = 0.7, horiz = T,main = "")
+```
+
+```{r echo=FALSE}
+fviz_silhouette(res.agnes2,print.summary = F)
+```
+
+
+```{r include=FALSE}
+fviz_nbclust(clusBDU3, hcut,diss=g.dist2,method ="gap_stat",k.max = 10,verbose = F,hc_func ="diana") #AQUÍ INICIA DIANA
+```
+
+```{r include=FALSE}
+set.seed(123)
+res.diana2 <- hcut(g.dist2, k = 3,hc_func='diana')
+clusBDU3$diana=res.diana2$cluster
+# veamos
+head(clusBDU3,15)%>%kbl%>%kable_styling()
+```
+
+```{r include=FALSE}
+fviz_dend(res.diana2, cex =0.7, horiz = T, main ="")
+```
+
+```{r include=FALSE}
+fviz_silhouette(res.diana2,print.summary = F)
+```
+
+
+## 6. Exploración de los conglomerados con técnica AGNES:
+
+
+## 6.1. Características de los conglomerados:
+
+
+## 6.1.1. Año 2019: 
+
+
+```{r include=FALSE}
+BDU2$clust = factor(res.agnes$cluster)
+head(BDU2)
+```
+
+```{r include=FALSE}
+#Lo pasamos a la data original:
+BDU2 = BDU2[,c(2,11)]
+```
+
+```{r include=FALSE}
+BDU4 = BDU[,-c(13,14)]
+BDU4
+```
+
+
+```{r include=FALSE}
+BDU4 = merge(BDU4, BDU2, by = "COUNTRY")
+BDU4
+```
+
+```{r include=FALSE}
+BDU4$clust = factor(BDU4$clust, levels = c(1:2), labels = c("Muy corrupto o Corrupto","Medianamente corrupto o Poco corrupto"))
+```
+
+
+```{r include=FALSE}
+summ_clust = BDU4 %>% 
+  group_by(clust) %>%
+  summarise(`2019INDEP` = mean(`2019INDEP`, na.rm=T),
+            `2019ELECT` = mean(`2019ELECT`, na.rm = T),
+            `2019AUSCORR` = mean(`2019AUSCORR`, na.rm = T),
+            `2019PAR` = mean(`2019PAR`, na.rm =T),
+            `2019IDH` = mean(`2019IDH`, na.rm = T),
+            `2019LEG` = mean(`2019LEG`, na.rm = T),
+            `2019DES` = mean(`2019DES`, na.rm = T),
+            `2019INFLACION` = mean(`2019INFLACION`, na.rm = T))
+```
+
+```{r echo=FALSE}
+summ_clust%>%
+  kbl() %>%
+  kable_minimal()
+```
+
+
+## 6.1.2. Año 2020:
+
+
+```{r include=FALSE}
+BDU3$clust = factor(res.agnes2$cluster)
+head(BDU3)
+```
+
+```{r include=FALSE}
+#Lo pasamos a la data original:
+BDU3 = BDU3[,c(2,11)]
+```
+
+```{r include=FALSE}
+BDU5 = BDU[-c(13,14)]
+```
+
+```{r include=FALSE}
+BDU5 = merge(BDU5, BDU3, by = "COUNTRY")
+BDU5
+```
+
+```{r include=FALSE}
+BDU5$clust = factor(BDU5$clust, levels = c(1:3), labels = c("Corrupto o Medianamente corrupto","Muy Corrupto", "Poco corrupto"))
+```
+
+```{r include=FALSE}
+summ_clust = BDU5 %>% 
+  group_by(clust) %>%
+  summarise(`2020INDEP` = mean(`2020INDEP`, na.rm=T),
+            `2020ELECT` = mean(`2020ELECT`, na.rm = T),
+            `2020AUSCORR` = mean(`2020AUSCORR`, na.rm = T),
+            `2020PAR` = mean(`2020PAR`, na.rm =T),
+            `2020IDH` = mean(`2020IDH`, na.rm = T),
+            `2020LEG` = mean(`2020LEG`, na.rm = T),
+            `2020DES` = mean(`2020DES`, na.rm = T),
+            `2020INFLACION` = mean(`2020INFLACION`, na.rm = T))
+```
+
+```{r echo=FALSE}
+summ_clust%>%
+  kbl() %>%
+  kable_minimal()
+```
+
+
+## 6.2. Número de países por conglomerado:
+
+
+## 6.2.1.  Año 2019:
+
+
+```{r include=FALSE}
+bar1 = BDU4 %>%
+  group_by(clust) %>%
+  summarise(Cluster = n())
+```
+
+```{r echo=FALSE,message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=7,fig.height=5, fig.align="center"}
+ggplot(bar1, aes(x=clust, y=Cluster)) + 
+  geom_bar(stat = "identity") +
+  
+  labs(title = " ",
+       x = " ",
+       y = " ") +
+    geom_text(aes(label=Cluster), size=4, vjust=1.5, hjust = 0.5, color="white") + 
+  
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank())
+```
+
+
+## 6.2.2.  Año 2020:
+
+
+```{r include=FALSE}
+bar2 = BDU5 %>%
+  group_by(clust) %>%
+  summarise(Cluster = n())
+```
+
+```{r echo=FALSE,message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=7,fig.height=5, fig.align="center"}
+ggplot(bar2, aes(x=clust, y=Cluster)) + 
+  geom_bar(stat = "identity") +
+  
+  labs(title = " ",
+       x = " ",
+       y = " ") +
+    geom_text(aes(label=Cluster), size=4, vjust=1.5, hjust = 0.5, color="white") + 
+  
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank())
+```
+
+
+## 6.3. Mapas de calor: 
+
+
+## 6.3.1. Año 2019:
+
+
+```{r include=FALSE}
+#Juntamos información con el shape:
+mapCOUN19=merge(mapDIS,BDU4,by.x='iso3',by.y='ISO', all.x = T) #siempre primero el shape
+```
+
+```{r echo=FALSE,message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+mapaleyendaL2019= ggplot(mapCOUN19)+ geom_sf() + theme_light()
+mapaleyL2019= mapaleyendaL2019 + geom_sf(BDU4=mapCOUN19,
+              aes(fill=clust),color = "gray")
+      
+mapa1= mapaleyL2019 +
+coord_sf() + 
+scale_fill_manual(values=c("tomato","turquoise","lightgoldenrod1")) + theme_void() +
+  
+  
+theme(axis.title = element_blank(), axis.text = element_blank(), legend.position = "right") + labs(fill=" ") + theme(legend.text = element_text(size = 8)) +
+  
+labs(title = "Países según conglomerado de Percepción de corrupción") +
+  
+theme(
+plot.title = element_text(color="black", size=11, face="bold"))
+mapa1
+```
+
+
+## 6.3.2. Año 2020: 
+
+
+```{r include=FALSE}
+#Juntamos información con el shape:
+mapCOUN20=merge(mapDIS,BDU5,by.x='iso3',by.y='ISO', all.x = T) #siempre primero el shape
+```
+
+```{r echo=FALSE,message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+mapaleyendaL2020= ggplot(mapCOUN20)+ geom_sf() + theme_light()
+mapaleyL2020= mapaleyendaL2020 + geom_sf(BDU5=mapCOUN20,
+              aes(fill=clust),color = "gray")
+      
+mapa2= mapaleyL2020 +
+coord_sf() + 
+scale_fill_manual(values=c("tomato","turquoise","lightgoldenrod1")) + theme_void() +
+  
+  
+theme(axis.title = element_blank(), axis.text = element_blank(), legend.position = "right") + labs(fill=" ") + theme(legend.text = element_text(size = 8)) +
+  
+labs(title = "Países según conglomerado de Percepción de corrupción") +
+  
+theme(
+plot.title = element_text(color="black", size=11, face="bold"))
+mapa2
+```
+
+
+# 7. Regresiones lineales y poisson:
+
+
+```{r include=FALSE}
+REGRELMTOTAL19 = lm(BDU$`2019PERCOR` ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR` + BDU$`2019DES` + BDU$`2019INFLACION` + BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`)
+```
+
+```{r include=FALSE}
+REGRELMTOTAL20 = lm(BDU$`2020PERCOR` ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR` + BDU$`2020DES` + BDU$`2020INFLACION` + BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`)
+```
+
+```{r include=FALSE}
+REGREPOITOTAL19 = glm(BDU$`2019PERCOR` ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR` + BDU$`2019DES` + BDU$`2019INFLACION` + BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`,family = poisson(link = "log"))
+```
+
+```{r include=FALSE}
+REGREPOITOTAL20 = glm(BDU$`2020PERCOR` ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR` + BDU$`2020DES` + BDU$`2020INFLACION` + BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`,family = poisson(link = "log"))
+```
+
+
+## 7.1. Comparación de regresiones lineal y poisson - Año 2019:
+
+
+```{r echo=FALSE}
+modelslmpoi=list('Coeficientes Lineal' =REGRELMTOTAL19, 
+                 'Coeficientes asegurada' = REGREPOITOTAL19)
+modelsummary(modelslmpoi, title = "Regresiones Lineal y Poisson 2019",
+stars = TRUE,
+output = "kableExtra")
+```
+
+
+## 7.1.1. Coeficientes exponenciados de regresión poisson - Año 2019:
+
+
+```{r include=FALSE}
+modelspoi19=list('Coeficientes Poisson' =REGREPOITOTAL19)
+modelsummary(modelspoi19, title = "Regresión Poisson - Año 2019",
+stars = TRUE,
+output = "kableExtra")
+```
+
+```{r echo=FALSE}
+f2019 <- function (x) format(x, digits =4, scientific = FALSE)
+modelsummary(modelspoi19,
+             fmt=f2019,
+             exponentiate = T,
+             statistic = 'conf.int',
+             title = "Exponenciales de la Regresión Poisson - Año 2019",
+             stars =TRUE, 
              output = "kableExtra")
 ```
 
-## 4.1.2. Modelo Poisson: 
+
+## 7.2. Comparación de regresiones lineal y poisson - Año 2020: 
+
+
+```{r echo=FALSE}
+modelslmpoi2=list('Coeficientes Lineal' =REGRELMTOTAL20, 
+                 'Coeficientes Poisson' =REGREPOITOTAL20)
+modelsummary(modelslmpoi2, title = "Regresiones Lineal y Poisson 2020",
+stars = TRUE,
+output = "kableExtra")
+```
+
+
+## 7.2.1. Coeficientes exponenciados de regresión poisson - Año 2020: 
+
 
 ```{r include=FALSE}
-REGREVA19 = glm(BDU$`2019PERCOR` ~ BDU$`2019INDEP` + BDU$`2019ELECT` + BDU$`2019AUSCORR`,family = poisson(link = "log")) 
-summary(REGREVA19)
+modelspoi20=list('Coeficientes Poisson' =REGREPOITOTAL20)
+modelsummary(modelspoi20, title = "Regresión Poisson - Año 2020",
+stars = TRUE,
+output = "kableExtra")
 ```
 
 ```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVA19, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model2=list('2019PERCOR'=BDU)
-modelsummary(REGREVA19, title = "Poisson",
-             stars = TRUE,
+f2020 <- function (x) format(x, digits =4, scientific = FALSE)
+modelsummary(modelspoi20,
+             fmt=f2020,
+             exponentiate = T,
+             statistic = 'conf.int',
+             title = "Exponenciales de la Regresión Poisson - Año 2020",
+             stars =TRUE, 
              output = "kableExtra")
 ```
 
-## 4.1.2.1. Coeficientes exponenciados: 
 
-```{r echo=FALSE}
-INDEPENDENCIA19=coef(REGREVA19)[['BDU$`2019INDEP`']] 
-V_INJUS19=exp(INDEPENDENCIA19) 
-(CambioINDEPENDENCIA19=100*(V_INJUS19)) 
-```
-
-```{r echo=FALSE}
-ELECTO19=coef(REGREVA19)[['BDU$`2019ELECT`']] 
-V_ELECT19=exp(ELECTO19) 
-(CambioELECTO19=100*(1-1/V_ELECT19))
-```
-
-```{r echo=FALSE}
-AUSENCIA19=coef(REGREVA19)[['BDU$`2019AUSCORR`']] 
-V_AUSCORR19=exp(AUSENCIA19) 
-(CambioAUSENCIA19=100*(V_AUSCORR19))
-```
-
-
-## 4.2. Año 2020:
-
-## 4.2.1. Modelo Lineal:
-
-```{r include=FALSE}
-REGREVA20LM = lm(BDU$`2020PERCOR` ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`) 
-summary(REGREVA19LM) 
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVA20LM, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model3=list('2020PERCOR'=BDU)
-modelsummary(REGREVA20LM, title = "Modelo Lineal",
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-## 4.2.2. Modelo Poisson:
-
-```{r include=FALSE}
-REGREVA20 = glm(BDU$`2020PERCOR` ~ BDU$`2020INDEP` + BDU$`2020ELECT` + BDU$`2020AUSCORR`,family = poisson(link = "log"))
-summary(REGREVA20)
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVA20, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model4=list('2020PERCOR'=BDU)
-modelsummary(REGREVA20, title = "Poisson",
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-```{r echo=FALSE}
-INDEPENDENCIA20=coef(REGREVA20)[['BDU$`2020INDEP`']] 
-V_INJUS20=exp(INDEPENDENCIA20) 
-(CambioINDEPENDENCIA20=100*(V_INJUS20)) 
-```
-
-```{r echo=FALSE}
-ELECTO20=coef(REGREVA20)[['BDU$`2020ELECT`']] 
-V_ELECT20=exp(ELECTO20) 
-(CambioELECTO20=100*(1-1/V_ELECT20))
-```
-
-```{r echo=FALSE}
-AUSENCIA20=coef(REGREVA20)[['BDU$`2020AUSCORR`']] 
-V_AUSCORR20=exp(AUSENCIA20) 
-(CambioAUSENCIA20=100*(V_AUSCORR20))
-```
-
-
-## 4.3. Análisis de resultados:
-
-
-En el modelo del 2019, la percepción de la corrupción va a aumentar en un 115% al aumentar la independencia de justicia. También aumentará en 582% al aumentar el indice de ausencia de corrupción. Además, disminuirá en un 17.1% en respuesta a las composición decisiones y acciones del gobierno electo. 
-
-Para el modelo del año 2020, la percepción de la corrupción va a aumentar en un 110% al aumentar la independencia de justicia. También aumentará en 593% al aumentar el indice de ausencia de corrupción. Además, disminuirá en un 14.3% en respuesta a las composición decisiones y acciones del gobierno electo. 
-
-En los modelos de los años 2019 y 2020, los predictores de independencia de justicia y gobierno electo son poco significativos. En consecuencia, no se puede decir que estas variables impacten en la percepción de la corrupción, esto a pesar de que la variable gobierno electo gana cierto grado de significancia en 2020. Por otro lado, la predictora ausencia de corrupción no solo es significativa, sino que incrementa su valor de 2019 a 2020. Es interesante ver como la "ausencia de corrupción" esta generando un incremento en la "percepción de corrupción". Esto nos lleva a pensar que las mediciones no fueron hechas de manera adecuada (o se escogieron mal los parametros. 
-
-
-# 5. Regresión con variables independientes "Desempleo" e "Inflación"
-
-
-## 5.1. Año 2019
-
-## 5.1.1. Modelo Lineal:
-
-```{r include=FALSE}
-REGREVS19LM = lm(BDU$`2019PERCOR` ~ BDU$`2019DES` + BDU$`2019INFLACION`)
-summary(REGREVS19LM)
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVS19LM, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model5=list('2019PERCOR'=BDU)
-modelsummary(REGREVS19LM, title = "Modelo Lineal", 
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-## 5.1.2. Modelo Poisson:
-
-```{r include=FALSE}
-REGREVS19 = glm(BDU$`2019PERCOR` ~ BDU$`2019DES` + BDU$`2019INFLACION`,family = poisson(link = "log"))
-summary(REGREVS19)
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVS19, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model6=list('2019PERCOR'=BDU)
-modelsummary(REGREVS19, title = "Poisson", 
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-## 5.1.2.1. Coeficientes exponenciados: 
-
-```{r echo=FALSE}
-DESEMPLEO19=coef(REGREVS19)[['BDU$`2019DES`']] 
-V_DES19=exp(DESEMPLEO19) 
-(CambioDESEMPLEO19=100*(1-1/V_DES19)) 
-```
-
-```{r echo=FALSE}
-INFLACION19=coef(REGREVS19)[['BDU$`2019INFLACION`']] 
-V_INFLA19=exp(INFLACION19) 
-(CambioINFLACION19=100*(1-1/V_INFLA19))
-```
-
-
-## 5.2. Año 2020
-
-## 5.2.1. Modelo Lineal:
-
-```{r include=FALSE}
-REGREVS20LM = lm(BDU$`2020PERCOR` ~ BDU$`2020DES` + BDU$`2020INFLACION`)
-summary(REGREVS19LM)
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVS20LM, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model7=list('2020PERCOR'=BDU)
-modelsummary(REGREVS20LM, title = "Modelo Lineal", 
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-## 5.2.2. Modelo Poisson:
-
-```{r include=FALSE}
-REGREVS20 = glm(BDU$`2020PERCOR` ~ BDU$`2020DES` + BDU$`2020INFLACION`, family = poisson(link = "log"))
-summary(REGREVS20)
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVS20, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model8=list('2020PERCOR'=BDU)
-modelsummary(REGREVS20, title = "Poisson", 
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-## 5.2.2.1. Coeficientes exponenciados: 
-
-```{r echo=FALSE}
-DESEMPLEO20=coef(REGREVS20)[['BDU$`2020DES`']] 
-V_DES20=exp(DESEMPLEO20) 
-(CambioDESEMPLEO20=100*(1-1/V_DES20)) 
-```
-
-```{r echo=FALSE}
-INFLACION20=coef(REGREVS20)[['BDU$`2020INFLACION`']] 
-V_INFLA20=exp(INFLACION20) 
-(CambioINFLACION19=100*(1-1/V_INFLA20))
-
-```
-
-
-## 5.3 Análisis de resultados:
-
-
-Para el modelo del 2019, la percepción de la corrupción va a disminuir en un 0.76% a medida que aumenta el desempleo y, siguiendo esa tendencia, disminuirá en un 0.63% al aumentar en un punto la inflación.
-
-Para el modelo del año 2020, la percepción de la corrupción va a disminuir en un 0.67% en respuesta al aumento del desempleo. Asi mismo, disminuirá en 0.25% cuando la inflación aumente en un punto. 
-
-En los modelos de los años 2019 y 2020, tanto el predictor de desempleo como el de inflación registran estimates significativos (visibilizado en los asteriscos). En ese sentido, es claro que ambas variables impactan sobre la percepción de la corrupción. Sin embargo, los resultados de 2020 son incluso más bajos que los de 2019. Esto implica que la emergencia sanitaria provocada por la propagación del COVID-19 no tuvo un efecto tan fuerte en estos problemas socioeconómicos como se tiende a pensar. Por ello, el impacto sobre la variable dependiente es relativamente débil. 
-
-
-# 6. Regresión con variables independientes "Indice de democracia", "IDH" y "Legitimidad estatal":
-
-
-## 6.1. Año 2019:
-
-## 6.1.1. Modelo Lineal:
-
-```{r include=FALSE}
-REGREVANA19LM = lm(BDU$`2019PERCOR` ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`)
-summary(REGREVANA19LM)
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVANA19LM, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model9=list('2019PERCOR'=BDU)
-modelsummary(REGREVANA19LM, title = "Modelo Lineal", 
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-## 6.1.2. Modelo Poisson: 
-
-```{r include=FALSE}
-REGREVANA19 = glm(BDU$`2019PERCOR` ~ BDU$`2019PAR` + BDU$`2019IDH` + BDU$`2019LEG`,family = poisson(link = "log"))
-summary(REGREVANA19)
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVANA19, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model10=list('2019PERCOR'=BDU)
-modelsummary(REGREVANA19, title = "Poisson", 
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-## 6.1.2.1. Coeficientes exponenciados: 
-
-```{r echo=FALSE}
-DEMOCRACIA19=coef(REGREVANA19)[['BDU$`2019PAR`']] 
-V_DEM19=exp(DEMOCRACIA19) 
-(CambioDEMOCRACIA19=100*(1-1/V_DEM19)) 
-```
-
-```{r echo=FALSE}
-IDH19=coef(REGREVANA19)[['BDU$`2019IDH`']] 
-V_IDH19=exp(IDH19) 
-(CambioIDH19=100*(V_IDH19))
-```
-
-```{r echo=FALSE}
-LEGITIMIDAD19=coef(REGREVANA19)[['BDU$`2019LEG`']] 
-V_LEG19=exp(LEGITIMIDAD19) 
-(CambioLEGITIMIDAD20=100*(1-1/V_LEG19))
-```
-
-
-## 6.2. Año 2020:
-
-## 6.2.1. Modelo Lineal:
-
-```{r include=FALSE}
-REGREVANA20LM = lm(BDU$`2020PERCOR` ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`)
-summary(REGREVANA19)
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVANA20LM, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model11=list('2020PERCOR'=BDU)
-modelsummary(REGREVANA20LM, title = "Modelo Lineal", 
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-## 6.2.2. Modelo Poisson: 
-
-```{r include=FALSE}
-REGREVANA20 = glm(BDU$`2020PERCOR` ~ BDU$`2020PAR` + BDU$`2020IDH` + BDU$`2020LEG`,family = poisson(link = "log"))
-summary(REGREVANA20)
-```
-
-```{r echo=FALSE}
-equatiomatic::extract_eq(REGREVANA20, use_coefs = TRUE)
-```
-
-```{r echo=FALSE}
-model12=list('2020PERCOR'=BDU)
-modelsummary(REGREVANA20, title = "Poisson",
-             stars = TRUE,
-             output = "kableExtra")
-```
-
-## 6.2.2.1. Coeficientes exponenciados: 
-
-```{r echo=FALSE}
-DEMOCRACIA20=coef(REGREVANA20)[['BDU$`2020PAR`']] 
-V_DEM20=exp(DEMOCRACIA20) 
-(CambioDEMOCRACIA20=100*(1-1/V_DEM20)) 
-```
-
-```{r echo=FALSE}
-IDH20=coef(REGREVANA20)[['BDU$`2020IDH`']] 
-V_IDH20=exp(IDH20) 
-(CambioIDH20=100*(V_IDH20))
-```
-
-```{r echo=FALSE}
-LEGITIMIDAD20=coef(REGREVANA20)[['BDU$`2020LEG`']] 
-V_LEG20=exp(LEGITIMIDAD20) 
-(CambioLEGITIMIDAD20=100*(1-1/V_LEG20))
-```
-
-
-## 6.3. Análisis de los resultados: 
-
-
-Para el modelo del 2019, la percepción de la corrupción va a disminuir en un 26.8% al aumentar el índice  de democracia, además, va a aumentar en un 321% al aumentar en un punto el IDH y va a disminuir en un 9.8% cuando la legitimidad estatal aumenta.
-
-Para el modelo del año 2020, la percepción de la corrupción va a disminuir en un 10.6% frente al aumento del índice de democracia, asimismo, va a aumentar en un 369% al aumentar en un punto el IDH y va a disminuir en un 7.7% cuando la legitimidad estatal aumenta.
-
-En los modelos de los años 2019 y 2020, los predictores de legitimidad estatal e IDH se muestran muy significativos; es decir, estas variables causan gran impacto en la percepción de la corrupción. Sin embargo, se evidencia que la variable de índice de democracia pierde significancia entre estos mismos años, por lo que no resulta muy significativa. Ello indica que el indice de democracia, respecto a paises en los que hay elecciones y competitividad política, no impacta realmente en la percepción de la corrupción de los ciudadanos.
