@@ -36,8 +36,25 @@ El objetivo del presente trabajo es analizar los resultados de la percepción de
 
 
 + La variable dependiente escogida para este estudio es la "Percepción de corrupción" (PERCOR). 
-+ Se ha eliminado la variable independiente "Saneamiento", esto debido a que la base de datos ofrecia muy pocos casos para el análisis. 
 
++ Se ha eliminado la variable independiente "Saneamiento", esto debido a que la base de datos ofrecía muy pocos casos para el análisis. 
+
++ Las variables que se mantienen para el análisis son las siguientes:
+
+  --> Independencia de justicia (INDEP)
+  --> Gobierno electo (ELECT)
+  --> Ausencia de corrupción (AUSCORR)
+  --> Desempleo (DES)
+  --> Inflación (INFLA)
+  --> Indice de democracia (PAR)
+  --> Indice de Desarrollo Humano (IDH)
+  --> Legitimidad estatal (LEG)
+
++ Se realizará un análisis descriptivo y georreferenciado de los resultados a nivel de países
+
++ Se aplicará técnicas de reducción de dimensiones para agrupar a los países en función de las variables presentadas anteriormente. Estas reflejan aspectos sociales,   económicos y políticos de los diferentes estados presentes en la base de datos. 
+
++ Se implementarán técnicas multivariadas para modelar el comportamiento de la "Percepción de la corrupción" en los distintos países.
 
 # 2. Base de datos unificada:
 
@@ -136,7 +153,8 @@ mapa4
 ```
 
 
-# 4. Conglomeración de variables independientes - Año 2019: 
+# 4. Conglomeración de variables independientes: 
+
 
 ## 4.1. Preparación de datos para la conglomeración - Año 2019: 
 
@@ -211,7 +229,7 @@ fviz_nbclust(clusBDU2, hcut,diss=g.dist,method = "gap_stat",k.max = 10,verbose =
 ```{r echo=FALSE}
 set.seed(123)
 library(factoextra)
-res.agnes<- hcut(g.dist, k =2,hc_func='agnes',hc_method ="ward.D")
+res.agnes<- hcut(g.dist, k =5,hc_func='agnes',hc_method ="ward.D")
 clusBDU2$agnes=res.agnes$cluster
 # ver
 head(clusBDU2,15)%>%kbl()%>%kable_styling()
@@ -247,10 +265,7 @@ fviz_silhouette(res.diana,print.summary = F)
 ```
 
 
-# 5. Conglomeración de variables independientes - Año 2020: 
-
-
-## 5.1. Preparación de datos para la conglomeración - Año 2020: 
+## 4.3. Preparación de datos para la conglomeración - Año 2020: 
 
 
 ```{r echo=FALSE}
@@ -307,7 +322,8 @@ head(clusBDU3,15)%>%kbl()%>%kable_styling()
 
 ```
 
-## 5.2. Conglomeración con técnica aglomerativa AGNES - Año 2020:
+
+## 4.4. Conglomeración con técnica aglomerativa AGNES - Año 2020:
 
 
 ```{r echo=FALSE}
@@ -353,7 +369,17 @@ fviz_silhouette(res.diana2,print.summary = F)
 ```
 
 
-## 6. Exploración de los conglomerados con técnica AGNES:
+## 4.5. Interpretación de los conglomerados - Años 2019 y 2020:
+
+
+Vamos a agrupar a los países en función a sus características sociales, económicas y políticas, siguiendo técnicas de reducción de dimensiones. Tenemos tres estrategias: divisiva con la técnica PAM y jerárquica con las técnicas de Agnes y Diana.
+
+Decidimos optar por la estrategia de aglomeración jerárquica AGNES, pues nos permite estandarizar los datos obteniendo el coeficiente de aglomeración, el cual mide la cantidad de estructura de agrupamiento encontrada (los valores más cercanos a 1 sugieren una estructura de agrupación fuerte). Además, ha mostrado ser la técnica con mejor desempeño para el agrupamiento de estos casos. Esto debido a que, si bien los resultados generales obtenidos fueron bajos, esta técnica mostró mejores resultados, siendo de 0.29 para el 2019 y 0.36 para el 2020 respectivamente en las siluetas.
+
+En la técnica AGNES para el año 2019, el número de clusters recomendados para la partición fue de 8, pero se determinamos que 5 sería más adecuado. Siguiendo esta técnica, para el año 2020, solicitamos el número óptimo de clusters y fueron 3 (valor con el cual nos quedamos).
+
+ 
+# 6. Exploración de los conglomerados con técnica AGNES:
 
 
 ## 6.1. Características de los conglomerados:
@@ -384,7 +410,7 @@ BDU4
 ```
 
 ```{r include=FALSE}
-BDU4$clust = factor(BDU4$clust, levels = c(1:2), labels = c("Muy corrupto o Corrupto","Medianamente corrupto o Poco corrupto"))
+BDU4$clust = factor(BDU4$clust, levels = c(1:5), labels = c("Corrupto","Medianamente corrupto","Muy poco corrupto","Muy corrupto","Poco corrupto"))
 ```
 
 
@@ -519,7 +545,7 @@ mapaleyL2019= mapaleyendaL2019 + geom_sf(BDU4=mapCOUN19,
       
 mapa1= mapaleyL2019 +
 coord_sf() + 
-scale_fill_manual(values=c("tomato","turquoise","lightgoldenrod1")) + theme_void() +
+scale_fill_manual(values=c("tomato","turquoise","lightgoldenrod1", "lightgreen","yellow")) + theme_void() +
   
   
 theme(axis.title = element_blank(), axis.text = element_blank(), legend.position = "right") + labs(fill=" ") + theme(legend.text = element_text(size = 8)) +
@@ -646,5 +672,19 @@ modelsummary(modelspoi20,
              stars =TRUE, 
              output = "kableExtra")
 ```
+
+
+## 7.3. Interpretación de regresiones:
+
+
+En el presente trabajo se ha determinado que para modelar la percepción de corrupción es necesario realizar una regression lineal y una regression Poisson, con el objetivo de identificar el mejor modelo para este trabajo.
+
+Para el año 2019, la variable de Independencia de la Justicia no presenta significancia en ninguno de los modelos. Esta situación también se muestra para las variables de Desempleo e Inflación. Asimismo, vemos que la Poisson le devuelve cierta significancia a la variable de Índice de democracia, pues en la lineal no presenta significancia alguna. Por su parte, las variables de Ausencia de corrupción, Legitimidad estatal e IDH sí presentan un efecto significativo, las dos primeras al 0.001 y la variables de legitimidad al 0.01.
+
+Para el año 2020, la variable de Independencia de la Justicia sigue sin presenter significancia en ambos modelos. Esta situación se replica para la variables de Índice de democracia. Por su parte, la variable de Desempleo presenta una ligera significancia,en la lineal y la pierde en la Poisson. Caso contrario ocurre con variable inflación, pues adquiere una minima significancia en la Poisson. Por otro lado, las variables de Ausencia de corrupción, IDH y Legitimidad estatal se muestran una significancia relevante de 0.001.
+
+En ese sentido, las tablas muestran que los valores obtenidos por la regresiones se difieren ligeramente en los resultados. Por ello, ambas servirían para predecir; no obstante, solo la Poisson le da mayor significancia al predictor de interés.
+
+Finalmente, es necesario resaltar que las tablas de coeficientes exponenciados brindan resultados mucho más exactos de la regresión Poisson. Sin embargo, los grados de significancia de las diferentes variables siguen la misma tendencia que los datos anteriores, por lo que no se profundiza más su análisis.
 
 
